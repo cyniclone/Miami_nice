@@ -1,6 +1,4 @@
-/*
-  Modified from Daniel Shiffman's Box2D Processing Examples
- */
+/* Modified from Daniel Shiffman's Box2D Processing Examples */
 
 // A rectangular box
 class Box {
@@ -53,7 +51,6 @@ class Box {
     // Attach Fixture to Body               
     body.createFixture(fd);
   }
-
 
   void display() {
     // We need the Body’s location and angle
