@@ -19,10 +19,12 @@ void setup() {
   // Create ArrayLists
   players = new ArrayList<Player>();
 
-  Player p = new Player(width/4*1, height/4*3);
+  // Start location of player
+  Player p = new Player(width/4*1, height-50, 16, 32);
   players.add(p);
   
-  floor = new Boundary(width/2, height-10, width, 10);
+  // Create boundaries
+  floor = new Boundary(width/2, height-5, width, 10);
 }
 
 void draw() {
@@ -34,7 +36,7 @@ void draw() {
   floor.display();
 
 
-  // Display all the boxes
+  // Display players
   for (Player p : players) {
     p.display();
   }
