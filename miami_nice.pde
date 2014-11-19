@@ -7,7 +7,7 @@ ArrayList<Player> players;
 
 Box2DProcessing box2d;
 
-Boundary floor;
+Boundary floor, floor2;
 
 void setup() {
   size(400, 300);
@@ -29,6 +29,7 @@ void setup() {
 
   // Create boundaries
   floor = new Boundary(width/2, height-5, width, 10);
+  floor2 = new Boundary(200, height-50, width/2, 10);
 }
 
 void draw() {
@@ -44,10 +45,13 @@ void draw() {
   box2d.step();    
 
   floor.display();
+  floor2.display();
 
   // Display players
   for (Player p : players) {
+    p.update();
     p.display();
+    
   }
 }
 

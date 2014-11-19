@@ -6,6 +6,8 @@
 //GLOBAL VARIABLE
 boolean canJump;
 
+//Metal slug sprite: 35 x 42 pixels
+
 class Player extends Box {
 
   // Constructor  
@@ -17,9 +19,14 @@ class Player extends Box {
 
     makeBody(x, y); // Calls superclass method from Box
     //Set user data to player
+    body.setAngularVelocity(0);
 
 
     makeFootSensor();
+  }
+  void update() {
+    // To keep player from spinning
+    body.setAngularVelocity(0);
   }
 
   void display() {
