@@ -4,6 +4,7 @@ import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 
 ArrayList<Player> players;
+Player p;
 
 Box2DProcessing box2d;
 
@@ -13,9 +14,8 @@ void setup() {
   size(400, 300);
   smooth();
   // Initialize and create the Box2D world
-  box2d = new Box2DProcessing(this);  
+  box2d = new Box2DProcessing(this);
   box2d.createWorld();
-
 
   // Add a listener to listen for collisions
   box2d.world.setContactListener(new CustomListener());
@@ -24,7 +24,7 @@ void setup() {
   players = new ArrayList<Player>();
 
   // Start location of player
-  Player p = new Player(width/4*1, height-50, 16, 32);
+  Player p = new Player(width/4*1, height-50, 32, 40);
   players.add(p);
 
   // Create boundaries
@@ -34,6 +34,8 @@ void setup() {
 
 void draw() {
   background(255);
+
+  //CONTROLS
   if (mousePressed) {
     if (canJump) {
       for (Player p : players) {
@@ -41,8 +43,9 @@ void draw() {
       }
     }
   }
+
   // We must always step through time
-  box2d.step();    
+  box2d.step();
 
   floor.display();
   floor2.display();
@@ -51,11 +54,28 @@ void draw() {
   for (Player p : players) {
     p.update();
     p.display();
-    
   }
 }
 
+void keyPressed() {
+  for (Player p : players) {
+    if (keyCode == LEFT) {
+      p.vx = -8;
+    }
 
+    if (keyCode == RIGHT) {
+      p.vx = 8;
+    }
+
+    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
+  }
+}
+void keyReleased() {
+  for (Player p : players) {
+    p.vx = 0;
+    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
+  }  
+}
 
 //Handle jumping
 void beginContact (Contact cp) {

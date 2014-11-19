@@ -28,7 +28,7 @@ class Box {
 
   void makeBody(float x, float y) {
     // Build Body
-    BodyDef bd = new BodyDef();      
+    BodyDef bd = new BodyDef();
     bd.type = BodyType.DYNAMIC;
     bd.position.set(box2d.coordPixelsToWorld(x, y));
     body = box2d.createBody(bd);
@@ -46,8 +46,8 @@ class Box {
     // Parameters that affect physics
     fd.density = 1;
     fd.setUserData("box");
-//    fd.friction = 0.3;
-//    fd.restitution = 0.1;
+    fd.friction = 0.5;
+    // fd.restitution = 0.1;
 
     // Attach Fixture to Body               
     body.createFixture(fd);

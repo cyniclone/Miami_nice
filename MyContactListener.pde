@@ -21,8 +21,9 @@ class CustomListener implements ContactListener {
     Object o1 = b1.getUserData();
     Object o2 = b2.getUserData();
 
+    //Detect jumping
     if (f1.getUserData() == "foot" && o2.getClass() == Boundary.class) {
-      println("foot contact");
+      
       canJump = true;
     }
   }

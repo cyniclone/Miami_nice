@@ -9,16 +9,19 @@ boolean canJump;
 //Metal slug sprite: 35 x 42 pixels
 
 class Player extends Box {
+  float vx; // Left/Right velocity 
 
   // Constructor  
   Player(float x, float y, float w, float h) {
     this.w = w;
     this.h = h;
-
+    
+    vx = 0;
+    
     canJump = false;
 
     makeBody(x, y); // Calls superclass method from Box
-    //Set user data to player
+    
     body.setAngularVelocity(0);
 
 
@@ -26,7 +29,8 @@ class Player extends Box {
   }
   void update() {
     // To keep player from spinning
-    body.setAngularVelocity(0);
+    
+    body.setTransform(body.getPosition(), 0);
   }
 
   void display() {
@@ -65,6 +69,6 @@ class Player extends Box {
   void jump() {
     println("jumping");
     Vec2 pos = body.getWorldCenter();
-    body.applyForce(new Vec2(0, 600), pos);
+    body.applyForce(new Vec2(0, 3000), pos);
   }
 }
