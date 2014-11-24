@@ -97,26 +97,6 @@ void handleInput() {
   
 }
 
-//void keyPressed() {
-//  for (Player p : players) {
-//    if (keyCode == LEFT) {
-//      p.vx = -8;
-//    }
-//
-//    if (keyCode == RIGHT) {
-//      p.vx = 8;
-//    }
-//
-//    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
-//  }
-//}
-//void keyReleased() {
-//  for (Player p : players) {
-//    p.vx = 0;
-//    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
-//  }
-//}
-
 //Handle jumping
 void beginContact (Contact cp) {
   Fixture f1 = cp.getFixtureA();
