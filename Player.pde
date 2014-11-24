@@ -69,6 +69,6 @@ class Player extends Box {
   void jump() {
     println("jumping");
     Vec2 pos = body.getWorldCenter();
-    body.applyForce(new Vec2(0, 3000), pos);
+    body.applyForce(new Vec2(0, 2500), pos);
   }
 }

@@ -49,15 +49,6 @@ void setup() {
 void draw() {
   background(255);
 
-  //  //CONTROLS
-  //  if (mousePressed) {
-  //    if (canJump) {
-  //      for (Player p : players) {
-  //        p.jump();
-  //      }
-  //    }
-  //  }
-
   // Handle Input
   handleInput();
 
@@ -75,7 +66,7 @@ void draw() {
 }
 
 void handleInput() {
-  // If Jump button is pressed, jump
+  // Handle jumping (A button)
   if (stick.getButton("A").pressed()) {
     if (canJump) {
       for (Player p : players) {
@@ -83,27 +74,48 @@ void handleInput() {
       }
     }
   }
-}
-
-void keyPressed() {
-  for (Player p : players) {
-    if (keyCode == LEFT) {
+  
+  // Handle left/right movement
+  for (Player p: players) {
+    if (stick.getButton("LEFT").pressed()) {
       p.vx = -8;
     }
-
-    if (keyCode == RIGHT) {
+    if (stick.getButton("RIGHT").pressed()) {
       p.vx = 8;
     }
+    if (!stick.getButton("LEFT").pressed() &&
+        !stick.getButton("RIGHT").pressed() ) {
+          p.vx = 0;      
+    }
+    
+    
+    p.body.setLinearVelocity (
+      new Vec2 (p.vx, p.body.getLinearVelocity().y)
+    );
+  }
+  
+  
+}
 
-    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
-  }
-}
-void keyReleased() {
-  for (Player p : players) {
-    p.vx = 0;
-    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
-  }
-}
+//void keyPressed() {
+//  for (Player p : players) {
+//    if (keyCode == LEFT) {
+//      p.vx = -8;
+//    }
+//
+//    if (keyCode == RIGHT) {
+//      p.vx = 8;
+//    }
+//
+//    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
+//  }
+//}
+//void keyReleased() {
+//  for (Player p : players) {
+//    p.vx = 0;
+//    p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
+//  }
+//}
 
 //Handle jumping
 void beginContact (Contact cp) {
