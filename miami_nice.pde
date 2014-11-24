@@ -1,19 +1,33 @@
+//Game Control
+import org.gamecontrolplus.gui.*;
+import org.gamecontrolplus.*;
+import net.java.games.input.*;
+
+//Box2D
 import shiffman.box2d.*;
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 
-ArrayList<Player> players;
-Player p;
+ControlIO control;
+ControlDevice stick;
 
 Box2DProcessing box2d;
+
+ArrayList<Player> players;
+Player p;
 
 Boundary floor, floor2;
 
 void setup() {
   size(400, 300);
   smooth();
-  // Initialize and create the Box2D world
+
+  // Controls
+  control = ControlIO.getInstance(this); // Initialize controlIO
+  stick = control.getMatchedDevice("xbox"); //Find device from config file
+
+    // Initialize and create the Box2D world
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
 
@@ -35,14 +49,17 @@ void setup() {
 void draw() {
   background(255);
 
-  //CONTROLS
-  if (mousePressed) {
-    if (canJump) {
-      for (Player p : players) {
-        p.jump();
-      }
-    }
-  }
+  //  //CONTROLS
+  //  if (mousePressed) {
+  //    if (canJump) {
+  //      for (Player p : players) {
+  //        p.jump();
+  //      }
+  //    }
+  //  }
+
+  // Handle Input
+  handleInput();
 
   // We must always step through time
   box2d.step();
@@ -54,6 +71,17 @@ void draw() {
   for (Player p : players) {
     p.update();
     p.display();
+  }
+}
+
+void handleInput() {
+  // If Jump button is pressed, jump
+  if (stick.getButton("A").pressed()) {
+    if (canJump) {
+      for (Player p : players) {
+        p.jump();
+      }
+    }
   }
 }
 
@@ -74,7 +102,7 @@ void keyReleased() {
   for (Player p : players) {
     p.vx = 0;
     p.body.setLinearVelocity (new Vec2 (p.vx, p.body.getLinearVelocity().y));
-  }  
+  }
 }
 
 //Handle jumping
