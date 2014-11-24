@@ -44,9 +44,9 @@ class Box {
     FixtureDef fd = new FixtureDef();
     fd.shape = sd;
     // Parameters that affect physics
-    fd.density = 1;
+    fd.density = 1.5;
     fd.setUserData("box");
-    fd.friction = 0.5;
+    fd.friction = 0.25;
     // fd.restitution = 0.1;
 
     // Attach Fixture to Body               

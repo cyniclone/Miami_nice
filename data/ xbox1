@@ -1,0 +1,8 @@
+ xbox1
+ UP	 Dpad Up	1	BUTTON	11	0	0.0	0.0
+ DOWN	 Dpad down	1	BUTTON	12	0	0.0	0.0
+ LEFT	Dpad left	1	BUTTON	13	0	0.0	0.0
+RIGHT	Dpad right	1	BUTTON	14	0	0.0	0.0
+ START	 Start/pause	1	BUTTON	8	0	0.0	0.0
+ A	 Jump	1	BUTTON	0	0	0.0	0.0
+ X	Shoot	1	BUTTON	2	0	0.0	0.0
