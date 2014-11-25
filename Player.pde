@@ -20,15 +20,13 @@ class Player extends Box {
     vx = 0;
 
     makeBody(x, y); // Calls superclass method from Box
-    body.setAngularVelocity(0);
+    body.setFixedRotation(true); //Keeps player from spinning
 
     canJump = false;
     makeFootSensor();
   }
 
   void update() {
-    // To keep player from spinning
-    body.setTransform(body.getPosition(), 0);
 
     // Print coordinates if debugging
     if (frameCount % 10 == 0 && debug) {
@@ -66,10 +64,10 @@ class Player extends Box {
   // Creates the sensor that determines if player can jump
   void makeFootSensor() {
     PolygonShape sd = new PolygonShape();
-    float box2dW = box2d.scalarPixelsToWorld(10/2);
-    float box2dH = box2d.scalarPixelsToWorld(10/2);
+    float box2dW = box2d.scalarPixelsToWorld(4);
+    float box2dH = box2d.scalarPixelsToWorld(4);
     sd.setAsBox(box2dW, box2dH, 
-    new Vec2(0, box2d.scalarPixelsToWorld(-16)), 0);
+    new Vec2(0, box2d.scalarPixelsToWorld(-20)), 0);
 
     //sd.setAsBox(box2dW, box2dH); 
 

@@ -73,7 +73,7 @@ void handleInput() {
     }
   }
   
-  // Hangle shooting (X button)
+  // Handle shooting (X button)
   if (stick.getButton("X").pressed()) {
     if (canJump) {
       for (Player p : players) {
