@@ -1,18 +1,16 @@
-//Game Control
-import org.gamecontrolplus.gui.*;
+import org.gamecontrolplus.gui.*;  //Game Control
 import org.gamecontrolplus.*;
 import net.java.games.input.*;
-
-//Box2D
-import shiffman.box2d.*;
+import shiffman.box2d.*;  //Box2D
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
 
 ControlIO control;
 ControlDevice stick;
-
 Box2DProcessing box2d;
+
+final boolean debug = true;
 
 ArrayList<Player> players;
 Player p;
@@ -20,7 +18,7 @@ Player p;
 Boundary floor, floor2;
 
 void setup() {
-  size(400, 300);
+  size(1024, 768);
   smooth();
 
   // Controls
@@ -78,10 +76,10 @@ void handleInput() {
   // Handle left/right movement
   for (Player p: players) {
     if (stick.getButton("LEFT").pressed()) {
-      p.vx = -8;
+      p.vx = -p.MOVESPEED;
     }
     if (stick.getButton("RIGHT").pressed()) {
-      p.vx = 8;
+      p.vx = p.MOVESPEED;
     }
     if (!stick.getButton("LEFT").pressed() &&
         !stick.getButton("RIGHT").pressed() ) {
