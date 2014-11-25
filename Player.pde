@@ -30,7 +30,6 @@ class Player extends Box {
     // To keep player from spinning
     body.setTransform(body.getPosition(), 0);
 
-
     // Print coordinates if debugging
     if (frameCount % 10 == 0 && debug) {
       Vec2 pos = box2d.getBodyPixelCoord(body);
@@ -53,6 +52,13 @@ class Player extends Box {
     popMatrix();
   }
 
+  void jump() {
+    if (debug)
+      println("jumping");
+    Vec2 pos = body.getWorldCenter();
+    body.applyForce(new Vec2(0, 2500), pos);
+  }
+
   // Creates the sensor that determines if player can jump
   void makeFootSensor() {
     PolygonShape sd = new PolygonShape();
@@ -70,13 +76,6 @@ class Player extends Box {
     fd.setUserData("foot");
 
     body.createFixture(fd);
-  }
-
-  void jump() {
-    if (debug)
-      println("jumping");
-    Vec2 pos = body.getWorldCenter();
-    body.applyForce(new Vec2(0, 2500), pos);
   }
 }
 
