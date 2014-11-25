@@ -40,8 +40,8 @@ void setup() {
   players.add(p);
 
   // Create boundaries
-  floor = new Boundary(width/2, height-5, width, 10);
-  floor2 = new Boundary(200, height-50, width/2, 10);
+  floor = new Boundary(width/2, height-10, width, 20);
+  floor2 = new Boundary(400, height-45, 500, 20);
 }
 
 void draw() {
@@ -69,6 +69,15 @@ void handleInput() {
     if (canJump) {
       for (Player p : players) {
         p.jump();
+      }
+    }
+  }
+  
+  // Hangle shooting (X button)
+  if (stick.getButton("X").pressed()) {
+    if (canJump) {
+      for (Player p : players) {
+        p.shoot();
       }
     }
   }

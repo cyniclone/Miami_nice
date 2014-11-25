@@ -59,6 +59,10 @@ class Player extends Box {
     body.applyForce(new Vec2(0, 2500), pos);
   }
 
+  void shoot() {
+    println("bang");  
+  }
+  
   // Creates the sensor that determines if player can jump
   void makeFootSensor() {
     PolygonShape sd = new PolygonShape();
