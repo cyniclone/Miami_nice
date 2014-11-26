@@ -7,7 +7,7 @@
 boolean canJump;
 
 class Player extends Box {
-  final float MOVESPEED = 12;
+  final float MOVESPEED = 16;
   float vx; // Left/Right velocity 
 
   // Constructor  
@@ -25,13 +25,15 @@ class Player extends Box {
   }
 
   void update() {
-
+    body.setLinearVelocity (
+    new Vec2 (vx, body.getLinearVelocity().y)
+      );
     // Print coordinates if debugging
-    if (frameCount % 10 == 0 && debug) {
-      Vec2 pos = box2d.getBodyPixelCoord(body);
-      println("p1: (" + String.format("%.1f", pos.x)
-        + ", " + String.format("%.1f", pos.y) + ")");
-    }
+    //    if (frameCount % 10 == 0 && debug) {
+    //      Vec2 pos = box2d.getBodyPixelCoord(body);
+    //      println("p1: (" + String.format("%.1f", pos.x)
+    //        + ", " + String.format("%.1f", pos.y) + ")");
+    //    }
   }
 
   void display() {
@@ -52,22 +54,21 @@ class Player extends Box {
     if (debug)
       println("jumping");
     Vec2 pos = body.getWorldCenter();
-    body.applyForce(new Vec2(0, 2500), pos);
+    body.applyForce(new Vec2(0, 25000), pos);
   }
 
   void shoot() {
-    println("bang");  
+    println("bang");
   }
-  
+
   // Creates the sensor that determines if player can jump
   void makeFootSensor() {
     PolygonShape sd = new PolygonShape();
     float box2dW = box2d.scalarPixelsToWorld(4);
     float box2dH = box2d.scalarPixelsToWorld(4);
     sd.setAsBox(box2dW, box2dH, 
-    new Vec2(0, box2d.scalarPixelsToWorld(-20)), 0);
-
-    //sd.setAsBox(box2dW, box2dH); 
+    new Vec2(0, box2d.scalarPixelsToWorld(
+    -h/2)), 0);
 
     // Creates a foot sensor for jumping  
     FixtureDef fd = new FixtureDef();

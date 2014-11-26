@@ -1,8 +1,8 @@
 /* Programming for Designers Fall 2014
-     Miami Nice
-      by Nicolas Aguirre and Brandon Wilson
-      using box2d and game control plus libraries
-*/
+ Miami Nice
+ by Nicolas Aguirre and Brandon Wilson
+ using box2d and game control plus libraries
+ */
 import org.gamecontrolplus.gui.*;  //Game Control
 import org.gamecontrolplus.*;
 import net.java.games.input.*;
@@ -48,7 +48,9 @@ void setup() {
   players = new ArrayList<Player>();
 
   // Start location of player
-  Player p = new Player(width/4*1, height-50, 32, 40);
+//  Player p = new Player(width/4*1, height-50, 32, 40);
+  Player p = new Player(width/4, height-50, 92, 120);
+
   players.add(p);
 
   // Initialize scrolling variables
@@ -95,11 +97,9 @@ void handleInput() {
 
   // Handle shooting (X button)
   if (stick.getButton("X").pressed()) {
-    if (canJump) {
       for (Player p : players) {
         p.shoot();
       }
-    }
   }
 
   // Handle left/right movement
@@ -114,10 +114,6 @@ void handleInput() {
       !stick.getButton("RIGHT").pressed() ) {
       p.vx = 0;
     }
-
-    p.body.setLinearVelocity (
-    new Vec2 (p.vx, p.body.getLinearVelocity().y)
-      );
   }
 }
 // -----------------------------------------------
@@ -139,7 +135,7 @@ void scroll() {
       scrolling = false;
     }
   }
-  
+
   if (scrolling) {
     for (Player p : players) {
       p.vx = 0;
@@ -147,7 +143,7 @@ void scroll() {
     }
   }
   if (debug) {
-    line (SCROLL_X, 0, SCROLL_X, height);
+    line (SCROLL_X, 0, SCROLL_X, height); //Indicate scrolling threshold
   }
 }
 
