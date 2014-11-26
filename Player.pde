@@ -7,6 +7,8 @@
 boolean canJump;
 
 class Player extends Box {
+  PImage img;
+
   final float MOVESPEED = 16;
   float vx; // Left/Right velocity 
 
@@ -22,6 +24,8 @@ class Player extends Box {
 
     canJump = false;
     makeFootSensor();
+
+    img = loadImage("img.png");
   }
 
   void update() {
@@ -43,10 +47,12 @@ class Player extends Box {
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
     rotate(-a);              // translate and rotate the rectangle
-    fill(255, 0, 0);
-    stroke(125);
-    rectMode(CENTER);
-    rect(0, 0, w, h);
+    /*if (debug) {
+     stroke(255, 0, 0);
+     rectMode(CENTER);
+     rect(0, 0, w, h);
+    }*/
+    image(img, w/2, -h/2);
     popMatrix();
   }
 
