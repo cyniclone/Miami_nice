@@ -1,7 +1,12 @@
+/* Programming for Designers Fall 2014
+     Miami Nice
+      by Nicolas Aguirre and Brandon Wilson
+      using box2d and game control plus libraries
+*/
 import org.gamecontrolplus.gui.*;  //Game Control
 import org.gamecontrolplus.*;
 import net.java.games.input.*;
-import shiffman.box2d.*;  //Box2D
+import shiffman.box2d.*;           //Box2D
 import org.jbox2d.collision.shapes.*;
 import org.jbox2d.common.*;
 import org.jbox2d.dynamics.*;
@@ -22,6 +27,7 @@ float currentLoc;
 
 Boundary floor, floor2;
 
+// -----------------------------------------------
 void setup() {
   size(1024, 768);
   smooth();
@@ -33,6 +39,7 @@ void setup() {
     // Initialize and create the Box2D world
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
+  box2d.setGravity(0, -25);
 
   // Add a listener to listen for collisions
   box2d.world.setContactListener(new CustomListener());
@@ -75,6 +82,7 @@ void draw() {
   display();
 }
 
+// ----- INPUT HANDLING ------------------------
 void handleInput() {
   // Handle jumping (A button)
   if (stick.getButton("A").pressed()) {
@@ -112,6 +120,7 @@ void handleInput() {
       );
   }
 }
+// -----------------------------------------------
 
 // ----- UPDATE, SCROLL AND DISPLAY METHODS -----
 void update() {
