@@ -17,7 +17,7 @@ Player p;
 
 // Handles scrolling
 boolean scrolling;
-final float SCROLLX = 1024 * .85; // The point at which the screen scrolls
+final float SCROLL_X = 1024 * .85; // The point at which the screen scrolls
 float currentLoc;
 
 Boundary floor, floor2;
@@ -43,7 +43,7 @@ void setup() {
   // Start location of player
   Player p = new Player(width/4*1, height-50, 32, 40);
   players.add(p);
-  
+
   // Initialize scrolling variables
   scrolling = false;
   currentLoc = width;
@@ -65,22 +65,14 @@ void draw() {
   floor.display();
   floor2.display();
 
-  // Display players
-  for (Player p : players) {
-    p.update();
-    p.display();
-  }
-  
+  // Update
+  update();
+
   // Handle scrolling
-  if (scrolling) {
-    for (Player p : players) {
-      p.vx = 0;
-      Vec2 pos = box2d.getBodyPixelCoord(p.body);
-    } 
-  }
-  if (debug) {
-    line (SCROLLX, 0, SCROLLX, height); 
-  }
+  scroll();
+
+  // Display
+  display();
 }
 
 void handleInput() {
@@ -92,7 +84,7 @@ void handleInput() {
       }
     }
   }
-  
+
   // Handle shooting (X button)
   if (stick.getButton("X").pressed()) {
     if (canJump) {
@@ -101,9 +93,9 @@ void handleInput() {
       }
     }
   }
-  
+
   // Handle left/right movement
-  for (Player p: players) {
+  for (Player p : players) {
     if (stick.getButton("LEFT").pressed()) {
       p.vx = -p.MOVESPEED;
     }
@@ -111,18 +103,51 @@ void handleInput() {
       p.vx = p.MOVESPEED;
     }
     if (!stick.getButton("LEFT").pressed() &&
-        !stick.getButton("RIGHT").pressed() ) {
-          p.vx = 0;      
+      !stick.getButton("RIGHT").pressed() ) {
+      p.vx = 0;
     }
-    
-    
+
     p.body.setLinearVelocity (
-      new Vec2 (p.vx, p.body.getLinearVelocity().y)
-    );
+    new Vec2 (p.vx, p.body.getLinearVelocity().y)
+      );
+  }
+}
+
+// ----- UPDATE, SCROLL AND DISPLAY METHODS -----
+void update() {
+  for (Player p : players) {
+    p.update();
+  }
+}
+
+void scroll() {
+  for (Player p : players) {
+    Vec2 pos = box2d.getBodyPixelCoord(p.body);
+    if (pos.x + p.w/2 >= SCROLL_X) {
+      scrolling = true;
+      println("I'm scrolling");
+    } else {
+      scrolling = false;
+    }
   }
   
-  
+  if (scrolling) {
+    for (Player p : players) {
+      p.vx = 0;
+      Vec2 pos = box2d.getBodyPixelCoord(p.body);
+    }
+  }
+  if (debug) {
+    line (SCROLL_X, 0, SCROLL_X, height);
+  }
 }
+
+void display() {
+  for (Player p : players) {
+    p.display();
+  }
+}
+// -----------------------------------------------
 
 //Handle jumping
 void beginContact (Contact cp) {
