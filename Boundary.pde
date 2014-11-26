@@ -49,4 +49,3 @@ class Boundary {
     rect(x, y, w, h);
   }
 }
-

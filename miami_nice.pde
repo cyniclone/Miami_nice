@@ -15,6 +15,11 @@ final boolean debug = true;
 ArrayList<Player> players;
 Player p;
 
+// Handles scrolling
+boolean scrolling;
+final float SCROLLX = 1024 * .85; // The point at which the screen scrolls
+float currentLoc;
+
 Boundary floor, floor2;
 
 void setup() {
@@ -38,6 +43,10 @@ void setup() {
   // Start location of player
   Player p = new Player(width/4*1, height-50, 32, 40);
   players.add(p);
+  
+  // Initialize scrolling variables
+  scrolling = false;
+  currentLoc = width;
 
   // Create boundaries
   floor = new Boundary(width/2, height-10, width, 20);
@@ -60,6 +69,17 @@ void draw() {
   for (Player p : players) {
     p.update();
     p.display();
+  }
+  
+  // Handle scrolling
+  if (scrolling) {
+    for (Player p : players) {
+      p.vx = 0;
+      Vec2 pos = box2d.getBodyPixelCoord(p.body);
+    } 
+  }
+  if (debug) {
+    line (SCROLLX, 0, SCROLLX, height); 
   }
 }
 

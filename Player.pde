@@ -6,8 +6,6 @@
 //GLOBAL VARIABLE
 boolean canJump;
 
-//Metal slug sprite: 35 x 42 pixels
-
 class Player extends Box {
   final float MOVESPEED = 12;
   float vx; // Left/Right velocity 
