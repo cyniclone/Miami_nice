@@ -20,6 +20,9 @@ final boolean debug = true;
 ArrayList<Player> players;
 Player p;
 
+PImage bg;
+Vec2 bgPos;
+
 // Handles scrolling
 boolean scrolling;
 final float SCROLL_X = 1024 * .85; // The point at which the screen scrolls
@@ -31,6 +34,9 @@ Boundary floor, floor2;
 void setup() {
   size(1024, 768);
   smooth();
+
+  bg = loadImage("bg.png");
+  bgPos = new Vec2(0, 0);
 
   // Controls
   control = ControlIO.getInstance(this); // Initialize controlIO
@@ -48,7 +54,7 @@ void setup() {
   players = new ArrayList<Player>();
 
   // Start location of player
-//  Player p = new Player(width/4*1, height-50, 32, 40);
+  //  Player p = new Player(width/4*1, height-50, 32, 40);
   Player p = new Player(width/4, height-50, 92, 120);
 
   players.add(p);
@@ -70,9 +76,6 @@ void draw() {
 
   // We must always step through time
   box2d.step();
-
-  floor.display();
-  floor2.display();
 
   // Update
   update();
@@ -97,9 +100,9 @@ void handleInput() {
 
   // Handle shooting (X button)
   if (stick.getButton("X").pressed()) {
-      for (Player p : players) {
-        p.shoot();
-      }
+    for (Player p : players) {
+      p.shoot();
+    }
   }
 
   // Handle left/right movement
@@ -126,11 +129,12 @@ void update() {
 }
 
 void scroll() {
+  // Determine if player is at scroll threshold
   for (Player p : players) {
     Vec2 pos = box2d.getBodyPixelCoord(p.body);
     if (pos.x + p.w/2 >= SCROLL_X) {
       scrolling = true;
-      println("I'm scrolling");
+      println("scrolling: " + scrolling);
     } else {
       scrolling = false;
     }
@@ -138,19 +142,33 @@ void scroll() {
 
   if (scrolling) {
     for (Player p : players) {
-      p.vx = 0;
-      Vec2 pos = box2d.getBodyPixelCoord(p.body);
+      // 1.) Adjust player's xPos
+      // Set it equal to SCROLL_X
+
+      // 2.) Move non-player objects left
+      // Their xPos -= player's vx
+
+      // 3.) Move background left
+      // It's xPos -= player's vx
     }
-  }
-  if (debug) {
-    line (SCROLL_X, 0, SCROLL_X, height); //Indicate scrolling threshold
   }
 }
 
 void display() {
+  //Display background
+  image(bg, bgPos.x, bgPos.y);
+
+  //Display player
   for (Player p : players) {
     p.display();
   }
+
+  //Display obstacles
+  floor.display();
+  floor2.display();
+
+  if (debug) //Indicate scrolling threshold
+    line (SCROLL_X, 0, SCROLL_X, height);
 }
 // -----------------------------------------------
 

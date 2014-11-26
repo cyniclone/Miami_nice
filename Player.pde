@@ -52,7 +52,7 @@ class Player extends Box {
      rectMode(CENTER);
      rect(0, 0, w, h);
     }*/
-    image(img, w/2, -h/2);
+    image(img, -w/2, -h/2);
     popMatrix();
   }
 
