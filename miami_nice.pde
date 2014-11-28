@@ -25,7 +25,7 @@ Vec2 bgPos;
 
 // Handles scrolling
 boolean scrolling;
-final float SCROLL_X = 1024 * .85; // The point at which the screen scrolls
+float scrollX; // The point at which the screen scrolls
 float currentLoc;
 
 Boundary floor, floor2;
@@ -61,10 +61,11 @@ void setup() {
 
   // Initialize scrolling variables
   scrolling = false;
-  currentLoc = width;
+  scrollX = .85 * width;
+  currentLoc = 0;
 
   // Create boundaries
-  floor = new Boundary(width/2, height-10, width, 20);
+  floor = new Boundary(width/2, height-10, width*4, 20);
   floor2 = new Boundary(400, height-45, 500, 20);
 }
 
@@ -74,17 +75,27 @@ void draw() {
   // Handle Input
   handleInput();
 
-  // We must always step through time
+  // Update Box2D
   box2d.step();
 
-  // Update
+  // Update game objects
   update();
 
   // Handle scrolling
   scroll();
 
   // Display
+  pushMatrix();
+  translate(-currentLoc, 0);
   display();
+  popMatrix();
+  
+  if (debug) //Indicate scrolling threshold
+    line (scrollX, 0, scrollX, height);
+  
+  text("currentLoc: " + currentLoc, 20, 44);
+
+  
 }
 
 // ----- INPUT HANDLING ------------------------
@@ -132,28 +143,16 @@ void scroll() {
   // Determine if player is at scroll threshold
   for (Player p : players) {
     Vec2 pos = box2d.getBodyPixelCoord(p.body);
-    if (pos.x + p.w/2 >= SCROLL_X) {
+    if (pos.x + p.w/2 > scrollX) {
       scrolling = true;
-      println("scrolling: " + scrolling);
+      scrollX += (pos.x + p.w/2 - scrollX) ;
+      currentLoc += (pos.x + p.w/2 - scrollX);
     } else {
       scrolling = false;
     }
   }
 
-  if (scrolling) {
-    for (Player p : players) {
-      // 1.) Adjust player's xPos
-      // Set it equal to SCROLL_X
-      Vec2 pos = box2d.getBodyPixelCoord(p.body);
-      pos.x = SCROLL_X;
 
-    }
-    // 2.) Move non-player objects left
-    // Their xPos -= player's vx
-
-    // 3.) Move background left
-    // It's xPos -= player's vx
-  }
 }
 
 void display() {
@@ -168,9 +167,6 @@ void display() {
   //Display obstacles
   floor.display();
   floor2.display();
-
-  if (debug) //Indicate scrolling threshold
-    line (SCROLL_X, 0, SCROLL_X, height);
 }
 // -----------------------------------------------
 

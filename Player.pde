@@ -30,8 +30,7 @@ class Player extends Box {
 
   void update() {
     body.setLinearVelocity (
-      new Vec2 (vx, body.getLinearVelocity().y)
-    );
+    new Vec2 (vx, body.getLinearVelocity().y));
   }
 
   void display() {
@@ -45,10 +44,10 @@ class Player extends Box {
      stroke(255, 0, 0);
      rectMode(CENTER);
      rect(0, 0, w, h);
-    }*/
+     }*/
     image(img, -w/2, -h/2);
     popMatrix();
-    
+
     text("Pixel coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 20);
     pos = body.getWorldCenter();
     text("Box2D coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 32);
@@ -71,8 +70,7 @@ class Player extends Box {
     float box2dW = box2d.scalarPixelsToWorld(4);
     float box2dH = box2d.scalarPixelsToWorld(4);
     sd.setAsBox(box2dW, box2dH, 
-    new Vec2(0, box2d.scalarPixelsToWorld(
-    -h/2)), 0);
+    new Vec2(0, box2d.scalarPixelsToWorld(-h/2)), 0);
 
     // Creates a foot sensor for jumping  
     FixtureDef fd = new FixtureDef();
