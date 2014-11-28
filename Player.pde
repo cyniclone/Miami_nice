@@ -39,7 +39,6 @@ class Player extends Box {
 
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
-
     /*if (debug) {
      stroke(255, 0, 0);
      rectMode(CENTER);
