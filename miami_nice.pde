@@ -23,11 +23,6 @@ Player p;
 PImage bg;
 Vec2 bgPos;
 
-// Handles scrolling
-boolean scrolling;
-float scrollX; // The point at which the screen scrolls
-float currentLoc;
-
 Boundary floor, floor2;
 
 // -----------------------------------------------
@@ -54,15 +49,9 @@ void setup() {
   players = new ArrayList<Player>();
 
   // Start location of player
-  //  Player p = new Player(width/4*1, height-50, 32, 40);
-  Player p = new Player(width/4, height-50, 92, 120);
 
+  Player p = new Player(width/2, height/4*3, 92, 120);
   players.add(p);
-
-  // Initialize scrolling variables
-  scrolling = false;
-  scrollX = .85 * width;
-  currentLoc = 0;
 
   // Create boundaries
   floor = new Boundary(width/2, height-10, width*4, 20);
@@ -81,21 +70,8 @@ void draw() {
   // Update game objects
   update();
 
-  // Handle scrolling
-  scroll();
-
   // Display
-  pushMatrix();
-  translate(-currentLoc, 0);
   display();
-  popMatrix();
-  
-  if (debug) //Indicate scrolling threshold
-    line (scrollX, 0, scrollX, height);
-  
-  text("currentLoc: " + currentLoc, 20, 44);
-
-  
 }
 
 // ----- INPUT HANDLING ------------------------
@@ -132,30 +108,19 @@ void handleInput() {
 }
 // -----------------------------------------------
 
-// ----- UPDATE, SCROLL AND DISPLAY METHODS -----
+// ----- UPDATE AND DISPLAY METHODS -----
 void update() {
   for (Player p : players) {
     p.update();
   }
 }
 
-void scroll() {
-  // Determine if player is at scroll threshold
-  for (Player p : players) {
-    Vec2 pos = box2d.getBodyPixelCoord(p.body);
-    if (pos.x + p.w/2 > scrollX) {
-      scrolling = true;
-      scrollX += (pos.x + p.w/2 - scrollX) ;
-      currentLoc += (pos.x + p.w/2 - scrollX);
-    } else {
-      scrolling = false;
-    }
-  }
-
-
-}
-
 void display() {
+  pushMatrix();
+  translate(-players.get(0).getXpos() + width/2, 0);
+
+
+
   //Display background
   image(bg, bgPos.x, bgPos.y);
 
@@ -167,6 +132,16 @@ void display() {
   //Display obstacles
   floor.display();
   floor2.display();
+
+  popMatrix();
+
+  // GUI and debug stuff
+  if (debug) {
+    Vec2 pos = box2d.getBodyPixelCoord(players.get(0).body);
+    text("Pixel coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 20);
+    pos = players.get(0).body.getWorldCenter();
+    text("Box2D coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 32);
+  }
 }
 // -----------------------------------------------
 

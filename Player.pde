@@ -35,11 +35,11 @@ class Player extends Box {
 
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body); //Get body position+angle
-    float a = body.getAngle();
+
 
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
-    rotate(-a);              // translate and rotate the rectangle
+
     /*if (debug) {
      stroke(255, 0, 0);
      rectMode(CENTER);
@@ -47,10 +47,6 @@ class Player extends Box {
      }*/
     image(img, -w/2, -h/2);
     popMatrix();
-
-    text("Pixel coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 20);
-    pos = body.getWorldCenter();
-    text("Box2D coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 32);
   }
 
   void jump() {
@@ -79,6 +75,11 @@ class Player extends Box {
     fd.setUserData("foot");
 
     body.createFixture(fd);
+  }
+
+  float getXpos() {
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    return pos.x;
   }
 }
 
