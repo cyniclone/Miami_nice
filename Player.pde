@@ -30,14 +30,8 @@ class Player extends Box {
 
   void update() {
     body.setLinearVelocity (
-    new Vec2 (vx, body.getLinearVelocity().y)
-      );
-    // Print coordinates if debugging
-    //    if (frameCount % 10 == 0 && debug) {
-    //      Vec2 pos = box2d.getBodyPixelCoord(body);
-    //      println("p1: (" + String.format("%.1f", pos.x)
-    //        + ", " + String.format("%.1f", pos.y) + ")");
-    //    }
+      new Vec2 (vx, body.getLinearVelocity().y)
+    );
   }
 
   void display() {
