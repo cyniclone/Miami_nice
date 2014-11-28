@@ -144,13 +144,15 @@ void scroll() {
     for (Player p : players) {
       // 1.) Adjust player's xPos
       // Set it equal to SCROLL_X
+      Vec2 pos = box2d.getBodyPixelCoord(p.body);
+      pos.x = SCROLL_X;
 
-      // 2.) Move non-player objects left
-      // Their xPos -= player's vx
-
-      // 3.) Move background left
-      // It's xPos -= player's vx
     }
+    // 2.) Move non-player objects left
+    // Their xPos -= player's vx
+
+    // 3.) Move background left
+    // It's xPos -= player's vx
   }
 }
 

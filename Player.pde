@@ -54,6 +54,10 @@ class Player extends Box {
     }*/
     image(img, -w/2, -h/2);
     popMatrix();
+    
+    text("Pixel coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 20);
+    pos = body.getWorldCenter();
+    text("Box2D coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 32);
   }
 
   void jump() {
