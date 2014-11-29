@@ -8,6 +8,14 @@ boolean canJump;
 
 class Player extends Box {
   PImage img;
+  PImage[] sprites;
+  PImage spritesheet;
+  int facing; // 1: facing right; -1: facing left
+  int state; // Current state of animation
+  // 0: standing, 1: shooting, 2: running
+  // Standing:0 , shooting:1-2, running:3-14
+
+  int shootFrames;
 
   final float MOVESPEED = 16;
   float vx; // Left/Right velocity 
@@ -25,12 +33,35 @@ class Player extends Box {
     canJump = false;
     makeFootSensor();
 
-    img = loadImage("img.png");
+    //img = loadImage("img.png");
+    // Load sprite and initialize spritesheet array
+    facing = 1; // Character starts facing left
+    state = 0;
+    spritesheet = loadImage("spritesheet.png");
+    sprites = new PImage[15];
+
+    int spriteW = spritesheet.width/5;
+    int spriteH = spritesheet.height/5;
+
+    // Populate spritesheet array
+    for (int i = 0; i < sprites.length; i++) {
+      int _x = i%5*spriteW;
+      int _y = i/5*spriteH;
+      sprites[i] = spritesheet.get(_x, _y, spriteW, spriteH);
+    }
   }
 
   void update() {
     body.setLinearVelocity (
     new Vec2 (vx, body.getLinearVelocity().y));
+    if (state == 1) {
+      if (shootFrames < 10) {
+        shootFrames++;
+      } else {
+        state = 0;
+        shootFrames = 0;
+      }
+    }
   }
 
   void display() {
@@ -39,12 +70,27 @@ class Player extends Box {
 
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
-    /*if (debug) {
-     stroke(255, 0, 0);
-     rectMode(CENTER);
-     rect(0, 0, w, h);
-     }*/
-    image(img, -w/2, -h/2);
+    scale(1.3);
+    if (debug) {
+      noFill();
+      stroke(255, 0, 0);
+      rectMode(CENTER);
+      rect(0, 0, w, h);
+    }
+    //image(img, -w/2, -h/2);
+    //image(sprites[frameCount%sprites.length], -w/2, -h/2);
+    switch (state) {
+    case 0:
+      image(sprites[0], -w/2, -h/2); 
+      break;
+    case 1:
+      if (shootFrames < 5) {
+      image(sprites[2], -w/2, -h/2);
+      } else {
+        image(sprites[1], -w/2, -h/2); 
+      }
+      break;
+    }
     popMatrix();
   }
 
@@ -56,7 +102,9 @@ class Player extends Box {
   }
 
   void shoot() {
-    println("bang");
+    //println("bang");
+    state = 1;
+    shootFrames = 0;
   }
 
   // Creates the sensor that determines if player can jump
