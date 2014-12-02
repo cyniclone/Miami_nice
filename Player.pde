@@ -33,9 +33,8 @@ class Player extends Box {
     canJump = false;
     makeFootSensor();
 
-    //img = loadImage("img.png");
     // Load sprite and initialize spritesheet array
-    facing = 1; // Character starts facing left
+    facing = 1; // Character starts facing right
     state = 0;
     spritesheet = loadImage("spritesheet.png");
     sprites = new PImage[15];
@@ -49,6 +48,7 @@ class Player extends Box {
       int _y = i/5*spriteH;
       sprites[i] = spritesheet.get(_x, _y, spriteW, spriteH);
     }
+    img = sprites[0]; // First animation frame
   }
 
   void update() {
@@ -67,7 +67,6 @@ class Player extends Box {
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body); //Get body position+angle
 
-
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
     scale(1.3);
@@ -77,20 +76,21 @@ class Player extends Box {
       rectMode(CENTER);
       rect(0, 0, w, h);
     }
-    //image(img, -w/2, -h/2);
-    //image(sprites[frameCount%sprites.length], -w/2, -h/2);
     switch (state) {
     case 0:
-      image(sprites[0], -w/2, -h/2); 
+      img = sprites[0]; 
       break;
     case 1:
       if (shootFrames < 5) {
-      image(sprites[2], -w/2, -h/2);
+        img = sprites[2];
       } else {
-        image(sprites[1], -w/2, -h/2); 
+        img = sprites[1];
       }
       break;
     }
+    if (facing == -1) 
+      scale(-1, 1); //Flip the image if facing left
+    image(img, -w/2, -h/2);
     popMatrix();
   }
 

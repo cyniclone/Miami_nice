@@ -95,9 +95,11 @@ void handleInput() {
   for (Player p : players) {
     if (stick.getButton("LEFT").pressed()) {
       p.vx = -p.MOVESPEED;
+      p.facing = -1;
     }
     if (stick.getButton("RIGHT").pressed()) {
       p.vx = p.MOVESPEED;
+      p.facing = 1;
     }
     if (!stick.getButton("LEFT").pressed() &&
       !stick.getButton("RIGHT").pressed() ) {
@@ -116,9 +118,8 @@ void update() {
 
 void display() {
   pushMatrix();
+  // Camera follows player
   translate(-players.get(0).getXpos() + width/2, 0);
-
-
 
   //Display background
   image(bg, bgPos.x, bgPos.y);
