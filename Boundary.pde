@@ -13,6 +13,10 @@ class Boundary {
 
   // But we also have to make a body for box2d to know about it
   Body b;
+  
+  Boundary(float x_, float y_) {
+    this(x_, y_, 16, 16); 
+  }
 
   Boundary(float x_, float y_, float w_, float h_) {
     x = x_;

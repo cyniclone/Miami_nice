@@ -24,6 +24,7 @@ PImage bg;
 Vec2 bgPos;
 
 Boundary floor, floor2;
+ArrayList<Boundary> tiles;
 
 // -----------------------------------------------
 void setup() {
@@ -47,6 +48,7 @@ void setup() {
 
   // Create ArrayLists
   players = new ArrayList<Player>();
+  tiles = new ArrayList<Boundary>();
 
   // Start location of player
   Player p = new Player(width/2, height/4*3, 80, 120);
@@ -55,6 +57,8 @@ void setup() {
   // Create boundaries
   floor = new Boundary(width/2, height-10, width*4, 20);
   floor2 = new Boundary(400, height-45, 500, 20);
+  
+  populateMap(1);
 }
 
 void draw() {
@@ -133,6 +137,11 @@ void display() {
   }
 
   //Display obstacles
+  
+  for (int i = 0; i < tiles.size(); i++) {
+    tiles.get(i).display(); 
+  }
+  
   floor.display();
   floor2.display();
 
@@ -147,7 +156,23 @@ void display() {
   }
 }
 // -----------------------------------------------
+// ----- LEVEL AND MAP HANDLING ------------------
 
+void populateMap(int mapNum) {
+  PImage levelMap;
+  levelMap = loadImage("map" + mapNum + ".png");
+  
+  for (int x = 0; x < levelMap.width; x++) {
+    for (int y = 0; y < levelMap.height; y++) {
+      if (levelMap.get(x, y) == color(0)) {
+         Boundary b = new Boundary(x * 16, y * 16);
+         tiles.add(b);
+      }
+    } 
+  }
+}
+
+// -----------------------------------------------
 //Handle jumping
 void beginContact (Contact cp) {
   Fixture f1 = cp.getFixtureA();
