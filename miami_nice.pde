@@ -75,22 +75,6 @@ void draw() {
 
 // ----- INPUT HANDLING ------------------------
 void handleInput() {
-  // Handle jumping (A button)
-  if (stick.getButton("A").pressed()) {
-    if (canJump) {
-      for (Player p : players) {
-        p.jump();
-      }
-    }
-  }
-
-  // Handle shooting (X button)
-  if (stick.getButton("X").pressed()) {
-    for (Player p : players) {
-      p.shoot();
-    }
-  }
-
   // Handle left/right movement
   for (Player p : players) {
     if (stick.getButton("LEFT").pressed()) {
@@ -104,6 +88,22 @@ void handleInput() {
     if (!stick.getButton("LEFT").pressed() &&
       !stick.getButton("RIGHT").pressed() ) {
       p.vx = 0;
+    }
+  }
+
+  // Handle jumping (A button)
+  if (stick.getButton("A").pressed()) {
+    if (canJump) {
+      for (Player p : players) {
+        p.jump();
+      }
+    }
+  }
+
+  // Handle shooting (X button)
+  if (stick.getButton("X").pressed()) {
+    for (Player p : players) {
+      p.shoot();
     }
   }
 }

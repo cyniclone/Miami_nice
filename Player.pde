@@ -11,11 +11,11 @@ class Player extends Box {
   PImage[] sprites;
   PImage spritesheet;
   int facing; // 1: facing right; -1: facing left
+  boolean shooting;
+  int shootTimer;
   int state; // Current state of animation
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
   // Standing:0 , shooting:1-2, running:3-12, run+shoot: 13-14
-
-  int shootFrames; //Which frame of animation for shooting
 
   final float MOVESPEED = 16;
   float vx; // Left/Right velocity 
@@ -60,14 +60,6 @@ class Player extends Box {
     }
 
     body.setLinearVelocity (new Vec2 (vx, body.getLinearVelocity().y));
-    if (state == 1) {
-      if (shootFrames < 10) {
-        shootFrames++;
-      } else {
-        state = 0;
-        shootFrames = 0;
-      }
-    }
   }
 
   // Display sprite to screen
@@ -83,21 +75,28 @@ class Player extends Box {
       rectMode(CENTER);
       rect(0, 0, w, h);
     }
-    switch (state) {
-    case 0:
-      img = sprites[0]; 
-      break;
-    case 1:
-      if (shootFrames < 5) {
-        img = sprites[2];
-      } else {
+
+    if (shooting) {
+      shootTimer++;
+      if (shootTimer <= 2) {
         img = sprites[1];
+      } else {
+        img = sprites[2];
       }
-      break;
-    case 2:
-      int n = frameCount % 10;
-      img = sprites[3+n];
-      break;
+      if (shootTimer > 5) {
+        shooting = false;
+      }
+    } else {
+      switch (state) {
+      case 0:
+        img = sprites[0]; 
+        break;
+      case 2:
+        int n = frameCount/3 % 10;
+        img = sprites[3+n];
+        println(3+n);
+        break;
+      }
     }
     if (facing == -1) 
       scale(-1, 1); //Flip the image if facing left
@@ -114,8 +113,8 @@ class Player extends Box {
 
   void shoot() {
     //println("bang");
-    state = 1;
-    shootFrames = 0;
+    shootTimer = 0;
+    shooting = true;
   }
 
   // Creates the sensor that determines if player can jump
