@@ -7,9 +7,8 @@
 boolean canJump;
 
 class Player extends Box {
-  PImage img;
+  PImage img, spritesheet;
   PImage[] sprites;
-  PImage spritesheet;
   int facing; // 1: facing right; -1: facing left
   boolean shooting;
   int shootTimer;
@@ -24,7 +23,6 @@ class Player extends Box {
   Player(float x, float y, float w, float h) {
     this.w = w;
     this.h = h;
-
     vx = 0;
 
     makeBody(x, y); // Calls superclass method from Box
@@ -68,7 +66,7 @@ class Player extends Box {
 
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
-    scale(1.3);
+    //scale(1.3);
     if (debug) {
       noFill();
       stroke(255, 0, 0);
@@ -76,7 +74,7 @@ class Player extends Box {
       rect(0, 0, w, h);
     }
 
-    if (shooting) {
+    if (shooting) { //Shooting animation takes precedence over others
       shootTimer++;
       if (shootTimer <= 2) {
         img = sprites[1];
@@ -100,7 +98,8 @@ class Player extends Box {
     }
     if (facing == -1) 
       scale(-1, 1); //Flip the image if facing left
-    image(img, -w/2, -h/2);
+    scale(1.5);
+    image(img, -55, -66);
     popMatrix();
   }
 
@@ -120,7 +119,7 @@ class Player extends Box {
   // Creates the sensor that determines if player can jump
   void makeFootSensor() {
     PolygonShape sd = new PolygonShape();
-    float box2dW = box2d.scalarPixelsToWorld(4);
+    float box2dW = box2d.scalarPixelsToWorld(20);
     float box2dH = box2d.scalarPixelsToWorld(4);
     sd.setAsBox(box2dW, box2dH, 
     new Vec2(0, box2d.scalarPixelsToWorld(-h/2)), 0);

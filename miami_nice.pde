@@ -49,7 +49,7 @@ void setup() {
   players = new ArrayList<Player>();
 
   // Start location of player
-  Player p = new Player(width/2, height/4*3, 92, 120);
+  Player p = new Player(width/2, height/4*3, 80, 120);
   players.add(p);
 
   // Create boundaries
