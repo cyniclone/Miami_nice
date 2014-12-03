@@ -80,14 +80,17 @@ void handleInput() {
     if (stick.getButton("LEFT").pressed()) {
       p.vx = -p.MOVESPEED;
       p.facing = -1;
+      p.running = true;
     }
     if (stick.getButton("RIGHT").pressed()) {
       p.vx = p.MOVESPEED;
       p.facing = 1;
+      p.running = true;
     }
     if (!stick.getButton("LEFT").pressed() &&
       !stick.getButton("RIGHT").pressed() ) {
       p.vx = 0;
+      p.running = false;
     }
   }
 

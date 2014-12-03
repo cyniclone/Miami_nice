@@ -11,12 +11,14 @@ class Player extends Box {
   PImage[] sprites;
   int facing; // 1: facing right; -1: facing left
   boolean shooting;
+  boolean running;
   int shootTimer;
   int state; // Current state of animation
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
   // Standing:0 , shooting:1-2, running:3-12, run+shoot: 13-14
 
-  final float MOVESPEED = 16;
+  final float MOVESPEED = 20;
+  final int JUMPFORCE = 50000;
   float vx; // Left/Right velocity 
 
   // Constructor  
@@ -77,9 +79,9 @@ class Player extends Box {
     if (shooting) { //Shooting animation takes precedence over others
       shootTimer++;
       if (shootTimer <= 2) {
-        img = sprites[1];
+        img = running ? sprites[13] : sprites[1];
       } else {
-        img = sprites[2];
+        img = running ? sprites[14] : sprites[2];
       }
       if (shootTimer > 5) {
         shooting = false;
@@ -107,7 +109,7 @@ class Player extends Box {
     if (debug)
       println("jumping");
     Vec2 pos = body.getWorldCenter();
-    body.applyForce(new Vec2(0, 25000), pos);
+    body.applyForce(new Vec2(0, JUMPFORCE), pos);
   }
 
   void shoot() {
