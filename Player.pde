@@ -12,10 +12,10 @@ class Player extends Box {
   PImage spritesheet;
   int facing; // 1: facing right; -1: facing left
   int state; // Current state of animation
-  // 0: standing, 1: shooting, 2: running
-  // Standing:0 , shooting:1-2, running:3-14
+  // 0: standing, 1: shooting, 2: running, 3:run+shoot
+  // Standing:0 , shooting:1-2, running:3-12, run+shoot: 13-14
 
-  int shootFrames;
+  int shootFrames; //Which frame of animation for shooting
 
   final float MOVESPEED = 16;
   float vx; // Left/Right velocity 
@@ -51,9 +51,15 @@ class Player extends Box {
     img = sprites[0]; // First animation frame
   }
 
+  // Update position variables
   void update() {
-    body.setLinearVelocity (
-    new Vec2 (vx, body.getLinearVelocity().y));
+    if (vx != 0) {
+      state = 2;
+    } else {
+      state = 0;
+    }
+
+    body.setLinearVelocity (new Vec2 (vx, body.getLinearVelocity().y));
     if (state == 1) {
       if (shootFrames < 10) {
         shootFrames++;
@@ -64,6 +70,7 @@ class Player extends Box {
     }
   }
 
+  // Display sprite to screen
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body); //Get body position+angle
 
@@ -86,6 +93,10 @@ class Player extends Box {
       } else {
         img = sprites[1];
       }
+      break;
+    case 2:
+      int n = frameCount % 10;
+      img = sprites[3+n];
       break;
     }
     if (facing == -1) 
