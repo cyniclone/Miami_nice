@@ -7,6 +7,7 @@
 boolean canJump;
 
 class Player extends Box {
+  ArrayList<Bullet> bullets;
   PImage img, spritesheet;
   PImage[] sprites;
   int facing; // 1: facing right; -1: facing left
@@ -23,6 +24,7 @@ class Player extends Box {
 
   // Constructor  
   Player(float x, float y, float w, float h) {
+    bullets = new ArrayList<Bullet>();
     this.w = w;
     this.h = h;
     vx = 0;
@@ -51,7 +53,7 @@ class Player extends Box {
     img = sprites[0]; // First animation frame
   }
 
-  // Update position variables
+  // ----- UPDATE -------------------------
   void update() {
     if (vx != 0) {
       state = 2;
@@ -60,9 +62,17 @@ class Player extends Box {
     }
 
     body.setLinearVelocity (new Vec2 (vx, body.getLinearVelocity().y));
+
+    // Update bullets
+    for (int i = 0; i < bullets.size (); i++) {
+      bullets.get(i).update();
+      if (bullets.get(i).count > BULLET_LIFE) {
+        bullets.remove(i); //Remove "dead" bullets
+      }
+    }
   }
 
-  // Display sprite to screen
+  // ----- DISPLAY ------------------------
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body); //Get body position+angle
 
@@ -113,9 +123,15 @@ class Player extends Box {
   }
 
   void shoot() {
-    //println("bang");
     shootTimer = 0;
     shooting = true;
+
+    // Make new bullet and add it to the arraylist
+    Vec2 pos = box2d.getBodyPixelCoord(body);
+    Bullet b = new Bullet(pos.x, pos.y, facing);
+    if (bullets.size() < 5) {
+      bullets.add(b);
+    }
   }
 
   // Creates the sensor that determines if player can jump
