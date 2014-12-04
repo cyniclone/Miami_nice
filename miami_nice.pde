@@ -130,6 +130,7 @@ void display() {
   translate(-players.get(0).getXpos() + width/2, 0);
 
   //Display background
+  imageMode(CORNER);
   image(bg, bgPos.x, bgPos.y);
 
   //Display player
@@ -172,7 +173,7 @@ void populateMap(int mapNum) {
         tiles.add(b);
       } else if (levelMap.get(x, y) == color(255, 0, 0)) {
         println("making enemy at " + x + ", " + y);
-        Enemy e = new Enemy(x, y, ENEMY_W, ENEMY_H);
+        Enemy e = new Enemy(x * 32, y * 32, ENEMY_W, ENEMY_H);
         enemies.add(e);
       }
     }

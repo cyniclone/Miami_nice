@@ -117,6 +117,7 @@ class Player extends Box {
     scale(1.5);
     //    imageMode(CORNER);
     //    image(img, -55, -66);
+    imageMode(CENTER);
     image(img, 0, -5);
     popMatrix();
   }

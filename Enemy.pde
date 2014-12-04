@@ -1,5 +1,6 @@
-final float ENEMY_W = 36;
-final float ENEMY_H = 48;
+final float ENEMY_SCALAR = 3;
+final float ENEMY_W = 36 * ENEMY_SCALAR;
+final float ENEMY_H = 48 * ENEMY_SCALAR;
 
 class Enemy extends Box {
   PImage img, spritesheet; //Skeleton will be 36x48
@@ -42,7 +43,7 @@ class Enemy extends Box {
     pushMatrix();
     translate(pos.x, pos.y);
     imageMode(CENTER);
-    image(img, 0, 0, w, h);
+    image(img, 0, 0, w, h+2);
     popMatrix();
   }
 }
