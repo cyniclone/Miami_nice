@@ -5,11 +5,15 @@ final float ENEMY_H = 48 * ENEMY_SCALAR;
 class Enemy extends Box {
   PImage img, spritesheet; //Skeleton will be 36x48
   PImage[] sprites;
+  int hp;
+  boolean dead;
 
   float x, y;
 
-
   Enemy (float x, float y, float w, float h) {
+    dead = false;
+    hp = 30;
+
     this.w = ENEMY_W;
     this.h = ENEMY_H;
 
@@ -33,6 +37,10 @@ class Enemy extends Box {
   }
 
   void update() {
+    if (hp <= 0) {
+      dead = true;
+      box2d.destroyBody(body);
+    }
   }
 
   void display() {
