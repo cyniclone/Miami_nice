@@ -23,7 +23,7 @@ Player p;
 PImage bg;
 Vec2 bgPos;
 
-Boundary floor;
+Boundary floor, floor2;
 ArrayList<Boundary> tiles;
 
 // -----------------------------------------------
@@ -31,7 +31,7 @@ void setup() {
   size(1024, 768);
   smooth();
 
-  bg = loadImage("bg1.png");
+  bg = loadImage("bg.png");
   bgPos = new Vec2(0, 0);
 
   // Controls
@@ -55,7 +55,8 @@ void setup() {
   players.add(p);
 
   // Create boundaries
-  floor = new Boundary(4947/2, height-32, 4947, 64);
+  floor = new Boundary(width/2, height-10, width*4, 20);
+  floor2 = new Boundary(400, height-45, 500, 20);
   
   populateMap(1);
 }
@@ -141,7 +142,7 @@ void display() {
   }
   
   floor.display();
-
+  floor2.display();
 
   popMatrix();
 
@@ -162,7 +163,7 @@ void populateMap(int mapNum) {
   for (int x = 0; x < levelMap.width; x++) {
     for (int y = 0; y < levelMap.height; y++) {
       if (levelMap.get(x, y) == color(0)) {
-         Boundary b = new Boundary(x * 32, y * 32);
+         Boundary b = new Boundary(x * 16, y * 16);
          tiles.add(b);
       }
     } 

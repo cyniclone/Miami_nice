@@ -17,8 +17,6 @@ class Player extends Box {
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
   // Standing:0 , shooting:1-2, running:3-12, run+shoot: 13-14
 
-  ArrayList<Bullet> bullets;
-
   final float MOVESPEED = 20;
   final int JUMPFORCE = 50000;
   float vx; // Left/Right velocity 
@@ -28,8 +26,6 @@ class Player extends Box {
     this.w = w;
     this.h = h;
     vx = 0;
-
-    bullets = new ArrayList<Bullet>();
 
     makeBody(x, y); // Calls superclass method from Box
     body.setFixedRotation(true); //Keeps player from spinning
@@ -69,11 +65,6 @@ class Player extends Box {
   // Display sprite to screen
   void display() {
     Vec2 pos = box2d.getBodyPixelCoord(body); //Get body position+angle
-    
-    //Display bullets
-    for (int i = 0; i < bullets.size(); i++) {
-      bullets.get(i).display(); 
-    }
 
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
@@ -125,13 +116,6 @@ class Player extends Box {
     //println("bang");
     shootTimer = 0;
     shooting = true;
-
-    // Make a new bullet and add it to arraylist
-    Vec2 pos = box2d.getBodyPixelCoord(body);
-    Bullet b = new Bullet(pos.x, pos.y, facing);
-    if (bullets.size() < 5) {
-      bullets.add(b);
-    }
   }
 
   // Creates the sensor that determines if player can jump
