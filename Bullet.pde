@@ -26,7 +26,7 @@ class Bullet {
   
   void display() {
     rectMode(CENTER);
-    fill(255, 255, 0);
+    fill(#2EC9FF);
     noStroke();
     rect(x, y, w, h);
   }

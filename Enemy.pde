@@ -12,7 +12,7 @@ class Enemy extends Box {
 
   Enemy (float x, float y, float w, float h) {
     dead = false;
-    hp = 30;
+    hp = 15;
 
     this.w = ENEMY_W;
     this.h = ENEMY_H;

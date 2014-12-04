@@ -133,7 +133,7 @@ class Player extends Box {
 
     // Make new bullet and add it to the arraylist
     Vec2 pos = box2d.getBodyPixelCoord(body);
-    Bullet b = new Bullet(pos.x, pos.y, facing);
+    Bullet b = new Bullet(pos.x, pos.y-30, facing);
     if (bullets.size() < 100) {
       bullets.add(b);
     }
