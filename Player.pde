@@ -75,10 +75,10 @@ class Player extends Box {
   // ----- DISPLAY ------------------------
   void display() {
     //Display bullets first
-    for (int i = 0; i < bullets.size(); i++) {
-      bullets.get(i).display(); 
+    for (int i = 0; i < bullets.size (); i++) {
+      bullets.get(i).display();
     }
-    
+
     Vec2 pos = box2d.getBodyPixelCoord(body); //Get body position+angle
 
     pushMatrix();
@@ -109,20 +109,19 @@ class Player extends Box {
       case 2:
         int n = frameCount/3 % 10;
         img = sprites[3+n];
-        println(3+n);
         break;
       }
     }
     if (facing == -1) 
       scale(-1, 1); //Flip the image if facing left
     scale(1.5);
-    image(img, -55, -66);
+    //    imageMode(CORNER);
+    //    image(img, -55, -66);
+    image(img, 0, -5);
     popMatrix();
   }
 
   void jump() {
-    if (debug)
-      println("jumping");
     Vec2 pos = body.getWorldCenter();
     body.applyForce(new Vec2(0, JUMPFORCE), pos);
   }

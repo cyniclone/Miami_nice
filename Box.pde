@@ -32,6 +32,7 @@ class Box {
     bd.type = BodyType.DYNAMIC;
     bd.position.set(box2d.coordPixelsToWorld(x, y));
     body = box2d.createBody(bd);
+    body.setUserData(this); // This might cause errors
 
     // Define a polygon (this is what we use for a rectangle)
     PolygonShape sd = new PolygonShape();

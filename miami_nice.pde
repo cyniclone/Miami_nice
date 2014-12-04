@@ -136,6 +136,11 @@ void display() {
   for (Player p : players) {
     p.display();
   }
+  
+  //Display enemies
+  for (Enemy e : enemies) {
+    e.display();
+  }
 
   //Display obstacles
   for (int i = 0; i < tiles.size (); i++) {

@@ -13,9 +13,9 @@ class Boundary {
 
   // But we also have to make a body for box2d to know about it
   Body b;
-  
+
   Boundary(float x_, float y_) {
-    this(x_, y_, 32, 32); 
+    this(x_, y_, 32, 32);
   }
 
   Boundary(float x_, float y_, float w_, float h_) {
@@ -29,7 +29,7 @@ class Boundary {
     // Figure out the box2d coordinates
     float box2dW = box2d.scalarPixelsToWorld(w/2);
     float box2dH = box2d.scalarPixelsToWorld(h/2);
-    // We're just a box
+
     sd.setAsBox(box2dW, box2dH);
 
 
@@ -41,7 +41,6 @@ class Boundary {
 
     // Attached the shape to the body using a Fixture
     b.createFixture(sd, 1);
-
     b.setUserData(this);
   }
 
@@ -53,3 +52,4 @@ class Boundary {
     rect(x, y, w, h);
   }
 }
+

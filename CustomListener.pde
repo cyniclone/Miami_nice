@@ -11,6 +11,7 @@ class CustomListener implements ContactListener {
 
   // Called when a new collision occurs
   void beginContact (Contact cp) {
+
     // Get both fixtures
     Fixture f1 = cp.getFixtureA();
     Fixture f2 = cp.getFixtureB();
@@ -22,6 +23,7 @@ class CustomListener implements ContactListener {
     Object o2 = b2.getUserData();
 
     //Detect jumping
+    // Getting nullpointer on this line
     if (f1.getUserData() == "foot" && o2.getClass() == Boundary.class) {
       canJump = true;
     }
