@@ -15,7 +15,7 @@ class Boundary {
   Body b;
   
   Boundary(float x_, float y_) {
-    this(x_, y_, 16, 16); 
+    this(x_, y_, 32, 32); 
   }
 
   Boundary(float x_, float y_, float w_, float h_) {
