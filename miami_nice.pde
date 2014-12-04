@@ -25,6 +25,7 @@ Vec2 bgPos;
 
 Boundary floor;
 ArrayList<Boundary> tiles;
+ArrayList<Enemy> enemies;
 
 // -----------------------------------------------
 void setup() {
@@ -49,6 +50,7 @@ void setup() {
   // Create ArrayLists
   players = new ArrayList<Player>();
   tiles = new ArrayList<Boundary>();
+  enemies = new ArrayList<Enemy>();
 
   // Start location of player
   Player p = new Player(width/2, height/4*3, 80, 120);
@@ -56,7 +58,7 @@ void setup() {
 
   // Create boundaries
   floor = new Boundary(4947/2, height-32, 4947, 64);
-  
+
   populateMap(1);
 }
 
@@ -136,10 +138,10 @@ void display() {
   }
 
   //Display obstacles
-  for (int i = 0; i < tiles.size(); i++) {
-    tiles.get(i).display(); 
+  for (int i = 0; i < tiles.size (); i++) {
+    tiles.get(i).display();
   }
-  
+
   floor.display();
 
   popMatrix();
@@ -157,14 +159,18 @@ void display() {
 void populateMap(int mapNum) {
   PImage levelMap;
   levelMap = loadImage("map" + mapNum + ".png");
-  
+
   for (int x = 0; x < levelMap.width; x++) {
     for (int y = 0; y < levelMap.height; y++) {
       if (levelMap.get(x, y) == color(0)) {
-         Boundary b = new Boundary(x * 32, y * 32);
-         tiles.add(b);
+        Boundary b = new Boundary(x * 32, y * 32);
+        tiles.add(b);
+      } else if (levelMap.get(x, y) == color(255, 0, 0)) {
+        println("making enemy at " + x + ", " + y);
+        Enemy e = new Enemy(x, y, ENEMY_W, ENEMY_H);
+        enemies.add(e);
       }
-    } 
+    }
   }
 }
 // -----------------------------------------------
