@@ -137,7 +137,6 @@ void display() {
   }
 
   //Display obstacles
-  
   for (int i = 0; i < tiles.size(); i++) {
     tiles.get(i).display(); 
   }
@@ -157,7 +156,6 @@ void display() {
 }
 // -----------------------------------------------
 // ----- LEVEL AND MAP HANDLING ------------------
-
 void populateMap(int mapNum) {
   PImage levelMap;
   levelMap = loadImage("map" + mapNum + ".png");
@@ -171,7 +169,6 @@ void populateMap(int mapNum) {
     } 
   }
 }
-
 // -----------------------------------------------
 //Handle jumping
 void beginContact (Contact cp) {
