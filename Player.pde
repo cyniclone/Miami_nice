@@ -18,7 +18,7 @@ class Player extends Box {
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
   // Standing:0 , shooting:1-2, running:3-12, run+shoot: 13-14
 
-  final float MOVESPEED = 20;
+  final float MOVESPEED = 25;
   final int JUMPFORCE = 50000;
   float vx; // Left/Right velocity 
 
@@ -74,6 +74,11 @@ class Player extends Box {
 
   // ----- DISPLAY ------------------------
   void display() {
+    //Display bullets first
+    for (int i = 0; i < bullets.size(); i++) {
+      bullets.get(i).display(); 
+    }
+    
     Vec2 pos = box2d.getBodyPixelCoord(body); //Get body position+angle
 
     pushMatrix();
@@ -129,7 +134,7 @@ class Player extends Box {
     // Make new bullet and add it to the arraylist
     Vec2 pos = box2d.getBodyPixelCoord(body);
     Bullet b = new Bullet(pos.x, pos.y, facing);
-    if (bullets.size() < 5) {
+    if (bullets.size() < 100) {
       bullets.add(b);
     }
   }
