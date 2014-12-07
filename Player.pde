@@ -67,7 +67,7 @@ class Player extends Box {
     for (int i = 0; i < bullets.size (); i++) {
       bullets.get(i).update();
       if (bullets.get(i).count > BULLET_LIFE) {
-        bullets.remove(i); //Remove "dead" bullets
+        bullets.remove(bullets.size()-1); //Remove "dead" bullets
       }
     }
   }

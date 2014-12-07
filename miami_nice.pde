@@ -124,14 +124,16 @@ void update() {
   }
 
   // Collision Detection
-  for (int i = 0; i < players.get(0).bullets.size (); i++) {
-    for (int j = 0; j < enemies.size (); j++) {
+  for (int j = 0; j < enemies.size (); j++) {
+    for (int i = 0; i < players.get (0).bullets.size (); i++) {
       Bullet b = players.get(0).bullets.get(i);
       Enemy e = enemies.get(j);
       Vec2 ePos = box2d.getBodyPixelCoord(e.body);
 
       if (dist(b.x, b.y, ePos.x, ePos.y) < 20) {
         e.hp--;
+
+        players.get(0).bullets.remove(i);
       }
     }
   }
@@ -144,70 +146,70 @@ void update() {
     }
   }
 }
-  void display() {
-    pushMatrix();
-    // Camera follows player
-    translate(-players.get(0).getXpos() + width/2, 0);
+void display() {
+  pushMatrix();
+  // Camera follows player
+  translate(-players.get(0).getXpos() + width/2, 0);
 
-    //Display background
-    imageMode(CORNER);
-    image(bg, bgPos.x, bgPos.y);
+  //Display background
+  imageMode(CORNER);
+  image(bg, bgPos.x, bgPos.y);
 
-    //Display player
-    for (Player p : players) {
-      p.display();
-    }
-
-    //Display enemies
-    for (Enemy e : enemies) {
-      e.display();
-    }
-
-    //Display obstacles
-    for (int i = 0; i < tiles.size (); i++) {
-      tiles.get(i).display();
-    }
-
-    floor.display();
-
-    popMatrix();
-
-    // GUI and debug stuff
-    if (debug) {
-      Vec2 pos = box2d.getBodyPixelCoord(players.get(0).body);
-      text("Pixel coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 20);
-      pos = players.get(0).body.getWorldCenter();
-      text("Box2D coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 32);
-    }
+  //Display player
+  for (Player p : players) {
+    p.display();
   }
-  // -----------------------------------------------
-  // ----- LEVEL AND MAP HANDLING ------------------
-  void populateMap(int mapNum) {
-    PImage levelMap;
-    levelMap = loadImage("map" + mapNum + ".png");
 
-    for (int x = 0; x < levelMap.width; x++) {
-      for (int y = 0; y < levelMap.height; y++) {
-        if (levelMap.get(x, y) == color(0)) {
-          Boundary b = new Boundary(x * 32, y * 32);
-          tiles.add(b);
-        } else if (levelMap.get(x, y) == color(255, 0, 0)) {
-          Enemy e = new Enemy(x * 32, y * 32, ENEMY_W, ENEMY_H);
-          enemies.add(e);
-        }
+  //Display enemies
+  for (Enemy e : enemies) {
+    e.display();
+  }
+
+  //Display obstacles
+  for (int i = 0; i < tiles.size (); i++) {
+    tiles.get(i).display();
+  }
+
+  floor.display();
+
+  popMatrix();
+
+  // GUI and debug stuff
+  if (debug) {
+    Vec2 pos = box2d.getBodyPixelCoord(players.get(0).body);
+    text("Pixel coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 20);
+    pos = players.get(0).body.getWorldCenter();
+    text("Box2D coords: (" + (int) pos.x + ", " + (int) pos.y + ")", 20, 32);
+  }
+}
+// -----------------------------------------------
+// ----- LEVEL AND MAP HANDLING ------------------
+void populateMap(int mapNum) {
+  PImage levelMap;
+  levelMap = loadImage("map" + mapNum + ".png");
+
+  for (int x = 0; x < levelMap.width; x++) {
+    for (int y = 0; y < levelMap.height; y++) {
+      if (levelMap.get(x, y) == color(0)) {
+        Boundary b = new Boundary(x * 32, y * 32);
+        tiles.add(b);
+      } else if (levelMap.get(x, y) == color(255, 0, 0)) {
+        Enemy e = new Enemy(x * 32, y * 32, ENEMY_W, ENEMY_H);
+        enemies.add(e);
       }
     }
   }
-  // -----------------------------------------------
-  //Handle jumping
-  void beginContact (Contact cp) {
-    Fixture f1 = cp.getFixtureA();
-    Fixture f2 = cp.getFixtureB();
+}
+// -----------------------------------------------
+//Handle jumping
+void beginContact (Contact cp) {
+  Fixture f1 = cp.getFixtureA();
+  Fixture f2 = cp.getFixtureB();
 
-    Body b1 = f1.getBody();
-    Body b2 = f2.getBody();
+  Body b1 = f1.getBody();
+  Body b2 = f2.getBody();
 
-    Object o1 = b1.getUserData();
-    Object o2 = b2.getUserData();
-  }
+  Object o1 = b1.getUserData();
+  Object o2 = b2.getUserData();
+}
 
