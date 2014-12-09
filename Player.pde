@@ -18,7 +18,7 @@ class Player extends Box {
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
   // Standing:0 , shooting:1-2, running:3-12, run+shoot: 13-14
 
-  final float MOVESPEED = 25;
+  final float MOVESPEED = 30;
   final int JUMPFORCE = 50000;
   float vx; // Left/Right velocity 
 

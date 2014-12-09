@@ -32,7 +32,7 @@ void setup() {
   size(1024, 768);
   smooth();
 
-  bg = loadImage("bg1.png");
+  bg = loadImage("bg.png");
   bgPos = new Vec2(0, 0);
 
   // Controls
@@ -42,7 +42,7 @@ void setup() {
     // Initialize and create the Box2D world
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
-  box2d.setGravity(0, -25);
+  box2d.setGravity(0, -35);
 
   // Add a listener to listen for collisions
   box2d.world.setContactListener(new CustomListener());
