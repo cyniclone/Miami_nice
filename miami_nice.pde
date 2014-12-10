@@ -130,7 +130,10 @@ void update() {
       Enemy e = enemies.get(j);
       Vec2 ePos = box2d.getBodyPixelCoord(e.body);
 
-      if (dist(b.x, b.y, ePos.x, ePos.y) < 20) {
+      //      if (dist(b.x, b.y, ePos.x, ePos.y) < 20) {
+      if (!(b.x+b.w/2 < ePos.x-e.w/2 || b.x-b.w/2 > ePos.x+e.w/2
+        || b.y-b.w/2 > ePos.y+e.w/2 || b.y+b.w/2 < ePos.y-e.w/2))  
+      {
         e.hp--;
 
         players.get(0).bullets.remove(i);

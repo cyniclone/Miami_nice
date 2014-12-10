@@ -5,6 +5,7 @@ final float ENEMY_H = 48 * ENEMY_SCALAR;
 class Enemy extends Box {
   PImage img, spritesheet; //Skeleton will be 36x48
   PImage[] sprites;
+  final int MAX_HP = 15;
   int hp;
   boolean dead;
 
@@ -12,7 +13,7 @@ class Enemy extends Box {
 
   Enemy (float x, float y, float w, float h) {
     dead = false;
-    hp = 15;
+    hp = MAX_HP;
 
     this.w = ENEMY_W;
     this.h = ENEMY_H;
@@ -52,7 +53,22 @@ class Enemy extends Box {
     translate(pos.x, pos.y);
     imageMode(CENTER);
     image(img, 0, 0, w, h+2);
+    
+    //Display lifebar
+    //Draw the container bar
+    stroke(0);
+    fill(50);
+    rectMode(CORNER);
+    rect(-w/2, -100, w, 15);
+    //Draw enemy's health as rectangle
+    noStroke();
+    fill(255, 50, 50);
+    rect(-w/2, -100, map(hp, 0, MAX_HP, 0, w), 15);
+    
     popMatrix();
+    
+    
+    
   }
 }
 

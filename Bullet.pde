@@ -1,6 +1,8 @@
 final int BULLET_LIFE = 150; //When bullet count exceeds this#, remove it
 
-class Bullet {    
+
+class Bullet {
+  PImage water;
   float w, h;
   float x, y;
   final int SPEED = 30;
@@ -10,6 +12,7 @@ class Bullet {
 
   // Constructor
   Bullet (float x, float y, int direction) {
+    water = loadImage("water.png");
     w = 16;
     h = 8;
     this.x = x;
@@ -25,10 +28,14 @@ class Bullet {
   }
   
   void display() {
-    rectMode(CENTER);
-    fill(#2EC9FF);
-    noStroke();
-    rect(x, y, w, h);
+    pushMatrix();
+    translate(x, y);
+    imageMode(CENTER);
+    if (vx < 0) {
+      scale(-1, 1);
+    }
+    image(water, 0, 0);
+    popMatrix();
   }
 }
 
