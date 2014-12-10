@@ -1,3 +1,9 @@
+/*
+  ASSET FROM:
+  http://opengameart.org/content/skeleton-and-ghost-spritesheets-ars-notoria
+  AUTHOR: Balmer
+*/
+
 final float ENEMY_SCALAR = 3;
 final float ENEMY_W = 36 * ENEMY_SCALAR;
 final float ENEMY_H = 48 * ENEMY_SCALAR;

@@ -16,7 +16,7 @@ class Player extends Box {
   int shootTimer;
   int state; // Current state of animation
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
-  // Standing:0 , shooting:1-2, running:3-12, run+shoot: 13-14
+  // Standing:0 , shooting:1-2, running:3-10, run+shoot: 11-12
 
   final float MOVESPEED = 30;
   final int JUMPFORCE = 50000;
@@ -38,16 +38,16 @@ class Player extends Box {
     // Load sprite and initialize spritesheet array
     facing = 1; // Character starts facing right
     state = 0;
-    spritesheet = loadImage("spritesheet.png");
-    sprites = new PImage[15];
+    spritesheet = loadImage("spritesheet1.png");
+    sprites = new PImage[12];
 
-    int spriteW = spritesheet.width/5;
-    int spriteH = spritesheet.height/5;
+    int spriteW = spritesheet.width/4;
+    int spriteH = spritesheet.height/4;
 
     // Populate spritesheet array
     for (int i = 0; i < sprites.length; i++) {
-      int _x = i%5*spriteW;
-      int _y = i/5*spriteH;
+      int _x = i%4*spriteW;
+      int _y = i/4*spriteH;
       sprites[i] = spritesheet.get(_x, _y, spriteW, spriteH);
     }
     img = sprites[0]; // First animation frame
@@ -67,7 +67,8 @@ class Player extends Box {
     for (int i = 0; i < bullets.size (); i++) {
       bullets.get(i).update();
       if (bullets.get(i).count > BULLET_LIFE) {
-        bullets.remove(bullets.size()-1); //Remove "dead" bullets
+        //        bullets.remove(bullets.size()-1); //Remove "dead" bullets
+        bullets.remove(0);
       }
     }
   }
@@ -83,7 +84,7 @@ class Player extends Box {
 
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
-    //scale(1.3);
+
     if (debug) {
       noFill();
       stroke(255, 0, 0);
@@ -94,9 +95,9 @@ class Player extends Box {
     if (shooting) { //Shooting animation takes precedence over others
       shootTimer++;
       if (shootTimer <= 2) {
-        img = running ? sprites[13] : sprites[1];
+        img = running ? sprites[10] : sprites[1];
       } else {
-        img = running ? sprites[14] : sprites[2];
+        img = running ? sprites[11] : sprites[2];
       }
       if (shootTimer > 5) {
         shooting = false;
@@ -107,16 +108,14 @@ class Player extends Box {
         img = sprites[0]; 
         break;
       case 2:
-        int n = frameCount/3 % 10;
+        int n = frameCount/5 % 6;
         img = sprites[3+n];
         break;
       }
     }
     if (facing == -1) 
       scale(-1, 1); //Flip the image if facing left
-    scale(1.5);
-    //    imageMode(CORNER);
-    //    image(img, -55, -66);
+    scale(0.5);
     imageMode(CENTER);
     image(img, 0, -5);
     popMatrix();
@@ -134,7 +133,7 @@ class Player extends Box {
     // Make new bullet and add it to the arraylist
     Vec2 pos = box2d.getBodyPixelCoord(body);
     Bullet b = new Bullet(pos.x + 25 * facing, pos.y-35, facing);
-    if (bullets.size() < 100) {
+    if (bullets.size() < 1000) {
       bullets.add(b);
     }
   }
@@ -144,7 +143,7 @@ class Player extends Box {
     PolygonShape sd = new PolygonShape();
     float box2dW = box2d.scalarPixelsToWorld(20);
     float box2dH = box2d.scalarPixelsToWorld(4);
-    sd.setAsBox(box2dW, box2dH, 
+    sd.setAsBox(box2dW, box2dH,
     new Vec2(0, box2d.scalarPixelsToWorld(-h/2)), 0);
 
     // Creates a foot sensor for jumping  

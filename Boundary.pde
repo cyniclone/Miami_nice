@@ -1,9 +1,13 @@
-/* Taken from Shiffman's The Nature of Code
- <http://www.shiffman.net/teaching/nature>*/
+/* Adapted from Shiffman's The Nature of Code
+ <http://www.shiffman.net/teaching/nature>
 
-// A fixed boundary class
+  ASSET FROM
+  http://opengameart.org/content/boxes-and-crates-svg-and-pngs
+  Author: SpriteAttack
+*/
 
 class Boundary {
+  PImage img;
 
   // A boundary is a simple rectangle with x,y,width,and height
   float x;
@@ -19,6 +23,8 @@ class Boundary {
   }
 
   Boundary(float x_, float y_, float w_, float h_) {
+    img = loadImage("crate" + (int) random(1,5) + ".png");
+    
     x = x_;
     y = y_;
     w = w_;
@@ -46,10 +52,15 @@ class Boundary {
 
   // Draw the boundary, if it were at an angle we'd have to do something fancier
   void display() {
-    fill(0);
-    stroke(0);
-    rectMode(CENTER);
-    rect(x, y, w, h);
+//    fill(0);
+//    stroke(0);
+//    rectMode(CENTER);
+//    rect(x, y, w, h);
+    pushMatrix();
+    //scale(1/3);
+    imageMode(CENTER);
+    image(img, x, y, w, h);
+    popMatrix();
   }
 }
 

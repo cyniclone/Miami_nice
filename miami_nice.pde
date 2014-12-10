@@ -53,7 +53,7 @@ void setup() {
   enemies = new ArrayList<Enemy>();
 
   // Start location of player
-  Player p = new Player(width/2, height/4*3, 80, 120);
+  Player p = new Player(width/2, height/4*3, 80, 140);
   players.add(p);
 
   // Create boundaries
@@ -173,7 +173,7 @@ void display() {
     tiles.get(i).display();
   }
 
-  floor.display();
+  //floor.display();
 
   popMatrix();
 
