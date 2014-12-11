@@ -142,6 +142,8 @@ void update() {
           || b.y-b.w/2 > ePos.y+e.w/2 || b.y+b.w/2 < ePos.y-e.w/2))  
         {
           e.hp--;
+          // Apply force against enemy
+          e.body.applyForce(new Vec2(b.direction*40000, 0), e.body.getWorldCenter());
 
           players.get(0).bullets.remove(i);
         }
