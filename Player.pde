@@ -85,12 +85,12 @@ class Player extends Box {
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
 
-    if (debug) {
+    /*if (debug) {
       noFill();
       stroke(255, 0, 0);
       rectMode(CENTER);
       rect(0, 0, w, h);
-    }
+    }*/
 
     if (shooting) { //Shooting animation takes precedence over others
       shootTimer++;

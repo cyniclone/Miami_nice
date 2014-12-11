@@ -37,7 +37,8 @@ void setup() {
 
   // Controls
   control = ControlIO.getInstance(this); // Initialize controlIO
-  stick = control.getMatchedDevice("xbox"); //Find device from config file
+//  stick = control.getMatchedDevice("xbox"); //Find device from config file
+  stick = control.getMatchedDevice("xboxwireless");
 
     // Initialize and create the Box2D world
   box2d = new Box2DProcessing(this);
