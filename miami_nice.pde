@@ -141,10 +141,11 @@ void update() {
         if (!(b.x+b.w/2 < ePos.x-e.w/2 || b.x-b.w/2 > ePos.x+e.w/2
           || b.y-b.w/2 > ePos.y+e.w/2 || b.y+b.w/2 < ePos.y-e.w/2))  
         {
-          e.hp--;
+          e.hp--; //Decrement enemy HP
           // Apply force against enemy
           e.body.applyForce(new Vec2(b.direction*40000, 0), e.body.getWorldCenter());
 
+          // Remove bullet from arraylist
           players.get(0).bullets.remove(i);
         }
       }
@@ -169,6 +170,9 @@ void display() {
   //Display background
   imageMode(CORNER);
   image(bg, bgPos.x, bgPos.y);
+  // Wrap-around images
+  image(bg, bgPos.x-bg.width, bgPos.y);
+  image(bg, bgPos.x+bg.width, bgPos.y);
 
   //Display player
   for (Player p : players) {
