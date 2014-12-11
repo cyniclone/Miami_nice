@@ -1,7 +1,8 @@
- Wireless xbox controller
+Wireless xbox controller
 UP	Dpad Up	1	BUTTON	11	0	0.0	0.0
 DOWN	Dpad Down	1	BUTTON	12	0	0.0	0.0
 LEFT	Dpad Left	1	BUTTON	13	0	0.0	0.0
 RIGHT	Dpad Right	1	BUTTON	14	0	0.0	0.0
 A	JUMP	1	BUTTON	0	0	0.0	0.0
 X	 SHOOT	1	BUTTON	2	0	0.0	0.0
+START	Start	1	BUTTON	8	0	0.0	0.0

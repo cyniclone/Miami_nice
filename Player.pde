@@ -19,7 +19,7 @@ class Player extends Box {
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
   // Standing:0 , shooting:1-2, running:3-10, run+shoot: 11-12
 
-  final int MAX_HP = 5;
+  final int MAX_HP = 1;
   int hp;
 
   boolean hit;

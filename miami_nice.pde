@@ -15,6 +15,9 @@ ControlIO control;
 ControlDevice stick;
 Box2DProcessing box2d;
 
+boolean game; // Game state: False means game is not in progress
+boolean win; // Did player win or lose?
+
 final boolean debug = false;
 
 ArrayList<Player> players;
@@ -32,13 +35,64 @@ void setup() {
   size(1024, 768);
   smooth();
 
-  bg = loadImage("bg.png");
-  bgPos = new Vec2(0, 0);
-
   // Controls
   control = ControlIO.getInstance(this); // Initialize controlIO
   //stick = control.getMatchedDevice("xbox"); //Find device from config file
   stick = control.getMatchedDevice("xboxwireless");
+
+  loadGame();
+}
+
+void draw() {
+  if (enemies.size() <= 0) { // Winning condition
+    game = false;
+    win = true;
+  }
+  if (players.get(0).hp <= 0) { // Losing condition
+    game = false;
+    win = false;
+  }
+  if (game) {
+    handleInput();
+
+    try {
+      box2d.step(); // Update Box2D
+    } 
+    catch (AssertionError e) {
+      println(e.getMessage()); // The joys of using physics libraries!
+    }
+
+    update();
+    display();
+  } else {
+    rectMode(CENTER);
+    fill(80);
+    stroke(#FAE119);
+    rect(width/2, height/2, width/2, height/2);
+    fill(#FAE119);
+    textAlign(CENTER);
+    textSize(44);
+    if (win) {
+      text("You win!", width/2, height/2);
+      textSize(24);
+      text("Press Start to play again.", width/2, height/2 + 50);
+    } else {
+      text("GAME OVER", width/2, height/2);
+      textSize(24);
+      text("Press Start to try again.", width/2, height/2 + 50);
+    }
+  }
+
+  if (!game && stick.getButton("START").pressed()) {
+    loadGame();
+  }
+}
+
+// ----- GAME LOADING METHOD -------------------
+void loadGame() {
+  game = true; // Set game state
+  bg = loadImage("bg.png");
+  bgPos = new Vec2(0, 0);
 
   // Initialize and create the Box2D world
   box2d = new Box2DProcessing(this);
@@ -61,27 +115,6 @@ void setup() {
   floor = new Boundary(4947/2, height-32, 4947, 64);
 
   populateMap(1);
-}
-
-void draw() {
-  background(255);
-
-  // Handle Input
-  handleInput();
-
-  // Update Box2D
-  try {
-    box2d.step();
-  } 
-  catch (AssertionError e) {
-    println(e.getMessage()); // The joys of using physics libraries!
-  }
-
-  // Update game objects
-  update();
-
-  // Display
-  display();
 }
 
 // ----- INPUT HANDLING ------------------------
