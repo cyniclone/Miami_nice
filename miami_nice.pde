@@ -40,7 +40,7 @@ void setup() {
   //stick = control.getMatchedDevice("xbox"); //Find device from config file
   stick = control.getMatchedDevice("xboxwireless");
 
-    // Initialize and create the Box2D world
+  // Initialize and create the Box2D world
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
   box2d.setGravity(0, -35);
@@ -70,7 +70,12 @@ void draw() {
   handleInput();
 
   // Update Box2D
-  box2d.step();
+  try {
+    box2d.step();
+  } 
+  catch (AssertionError e) {
+    println(e.getMessage());
+  }
 
   // Update game objects
   update();
@@ -132,20 +137,24 @@ void update() {
       Vec2 ePos = box2d.getBodyPixelCoord(e.body);
 
       //      if (dist(b.x, b.y, ePos.x, ePos.y) < 20) {
-      if (!(b.x+b.w/2 < ePos.x-e.w/2 || b.x-b.w/2 > ePos.x+e.w/2
-        || b.y-b.w/2 > ePos.y+e.w/2 || b.y+b.w/2 < ePos.y-e.w/2))  
-      {
-        e.hp--;
+      if (!e.dead) {
+        if (!(b.x+b.w/2 < ePos.x-e.w/2 || b.x-b.w/2 > ePos.x+e.w/2
+          || b.y-b.w/2 > ePos.y+e.w/2 || b.y+b.w/2 < ePos.y-e.w/2))  
+        {
+          e.hp--;
 
-        players.get(0).bullets.remove(i);
+          players.get(0).bullets.remove(i);
+        }
       }
     }
   }
   // Remove dead enemies
   for (int i = 0; i < enemies.size (); i++) {
     Enemy e = enemies.get(i);
-    e.update();
-    if (e.dead) {
+    if (!e.dead) {
+      e.update();
+    }
+    if (e.dyingAnimationFinished) {
       enemies.remove(i);
     }
   }

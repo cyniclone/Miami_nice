@@ -17,8 +17,6 @@ class Enemy extends Box {
   boolean dyingAnimationFinished;
   int dyingFrames;
 
-  int showFrame = 0;
-
   Vec2 pos;
 
   float x, y;
@@ -70,10 +68,10 @@ class Enemy extends Box {
     imageMode(CENTER);
 
     if (dead) {
-      img = sprites[19];
+      img = sprites[15 + dyingFrames/12];
 
       dyingFrames++;
-      dyingAnimationFinished = (dyingFrames > 59) ? true : false;
+      dyingAnimationFinished = (dyingFrames > 48) ? true : false;
     } else {
       img = sprites[frameCount/3 % 11];
 
