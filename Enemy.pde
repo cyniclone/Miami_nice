@@ -32,6 +32,7 @@ class Enemy extends Box {
 
     makeBody(x, y); // Calls superclass method from Box
     body.setFixedRotation(true); //Keeps player from spinning
+    body.setUserData("enemy");
     pos = box2d.getBodyPixelCoord(body);
 
     // Load sprite and initialize spritesheet array
@@ -46,8 +47,6 @@ class Enemy extends Box {
     for (int i = 0; i < sprites.length; i++) {
       int _x = i%5*spriteW;
       int _y = i/5*spriteH;
-      
-      println("i: " + i + " x: "+ _x +" y: "+ _y);
       sprites[i] = spritesheet.get(_x, _y, spriteW, spriteH);
     }
     img = sprites[0]; // First animation frame
@@ -82,11 +81,11 @@ class Enemy extends Box {
       stroke(0);
       fill(50);
       rectMode(CORNER);
-      rect(-w/2, -100, w, 15);
+      rect(-w/2, -100, w, 10);
       //Draw enemy's health as rectangle
       noStroke();
       fill(255, 50, 50);
-      rect(-w/2, -100, map(hp, 0, MAX_HP, 0, w), 15);
+      rect(-w/2, -100, map(hp, 0, MAX_HP, 0, w), 10);
     }
     image(img, 0, 0, w, h+2);
     popMatrix();

@@ -10,6 +10,7 @@ class Player extends Box {
   ArrayList<Bullet> bullets;
   PImage img, spritesheet;
   PImage[] sprites;
+
   int facing; // 1: facing right; -1: facing left
   boolean shooting;
   boolean running;
@@ -17,6 +18,12 @@ class Player extends Box {
   int state; // Current state of animation
   // 0: standing, 1: shooting, 2: running, 3:run+shoot
   // Standing:0 , shooting:1-2, running:3-10, run+shoot: 11-12
+
+  final int MAX_HP = 5;
+  int hp;
+
+  boolean hit;
+  int frameHit;
 
   final float MOVESPEED = 30;
   final int JUMPFORCE = 50000;
@@ -28,8 +35,12 @@ class Player extends Box {
     this.w = w;
     this.h = h;
     vx = 0;
+    hp = MAX_HP;
+    hit = false;
+    frameHit = 0;
 
     makeBody(x, y); // Calls superclass method from Box
+    body.setUserData("player");
     body.setFixedRotation(true); //Keeps player from spinning
 
     canJump = false;
@@ -61,7 +72,13 @@ class Player extends Box {
       state = 0;
     }
 
-    body.setLinearVelocity (new Vec2 (vx, body.getLinearVelocity().y));
+    // Check hit state
+    if (frameCount - frameHit >= 30 && hit)
+      hit = false;
+
+    if (!hit) {
+      body.setLinearVelocity (new Vec2 (vx, body.getLinearVelocity().y));
+    }
 
     // Update bullets
     for (int i = 0; i < bullets.size (); i++) {
@@ -85,12 +102,12 @@ class Player extends Box {
     pushMatrix();
     translate(pos.x, pos.y);    // Using the Vec2 position and float angle to
 
-    /*if (debug) {
+    if (debug) {
       noFill();
       stroke(255, 0, 0);
       rectMode(CENTER);
       rect(0, 0, w, h);
-    }*/
+    }
 
     if (shooting) { //Shooting animation takes precedence over others
       shootTimer++;
@@ -113,11 +130,24 @@ class Player extends Box {
         break;
       }
     }
+
+    //Display lifebar
+    //Draw the container bar
+    stroke(0);
+    fill(50);
+    rectMode(CORNER);
+    rect(-w/2, -100, w, 10);
+    //Draw player's health as rectangle
+    noStroke();
+    fill(50, 200, 50);
+    rect(-w/2, -100, map(hp, 0, MAX_HP, 0, w), 10);
+
     if (facing == -1) 
       scale(-1, 1); //Flip the image if facing left
     scale(0.5);
     imageMode(CENTER);
     image(img, 0, -5);
+
     popMatrix();
   }
 
@@ -143,7 +173,7 @@ class Player extends Box {
     PolygonShape sd = new PolygonShape();
     float box2dW = box2d.scalarPixelsToWorld(20);
     float box2dH = box2d.scalarPixelsToWorld(4);
-    sd.setAsBox(box2dW, box2dH,
+    sd.setAsBox(box2dW, box2dH, 
     new Vec2(0, box2d.scalarPixelsToWorld(-h/2)), 0);
 
     // Creates a foot sensor for jumping  

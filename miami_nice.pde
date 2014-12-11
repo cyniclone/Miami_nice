@@ -15,7 +15,7 @@ ControlIO control;
 ControlDevice stick;
 Box2DProcessing box2d;
 
-final boolean debug = true;
+final boolean debug = false;
 
 ArrayList<Player> players;
 Player p;
@@ -43,7 +43,7 @@ void setup() {
   // Initialize and create the Box2D world
   box2d = new Box2DProcessing(this);
   box2d.createWorld();
-  box2d.setGravity(0, -35);
+  box2d.setGravity(0, -30);
 
   // Add a listener to listen for collisions
   box2d.world.setContactListener(new CustomListener());
@@ -54,7 +54,7 @@ void setup() {
   enemies = new ArrayList<Enemy>();
 
   // Start location of player
-  Player p = new Player(width/2, height/4*3, 80, 140);
+  Player p = new Player(width/2, height/4*3, 60, 140);
   players.add(p);
 
   // Create boundaries
@@ -74,7 +74,7 @@ void draw() {
     box2d.step();
   } 
   catch (AssertionError e) {
-    println(e.getMessage());
+    println(e.getMessage()); // The joys of using physics libraries!
   }
 
   // Update game objects
@@ -182,7 +182,8 @@ void display() {
 
   //Display obstacles
   for (int i = 0; i < tiles.size (); i++) {
-    tiles.get(i).display();
+    if (dist(tiles.get(i).x, 0, players.get(0).getXpos(), 0) < 600)
+      tiles.get(i).display();
   }
 
   //floor.display();
