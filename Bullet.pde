@@ -1,4 +1,4 @@
-final int BULLET_LIFE = 150; //When bullet count exceeds this#, remove it
+final int BULLET_LIFE = 30; //When bullet count exceeds this#, remove it
 
 
 class Bullet {

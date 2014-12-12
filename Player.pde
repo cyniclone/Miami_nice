@@ -25,8 +25,8 @@ class Player extends Box {
   boolean hit;
   int frameHit;
 
-  final float MOVESPEED = 35;
-  final int JUMPFORCE = 50000;
+  final float MOVESPEED = 40;
+  final int JUMPFORCE = 65000;
   float vx; // Left/Right velocity 
 
   // Constructor  

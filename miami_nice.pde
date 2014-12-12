@@ -68,12 +68,13 @@ void draw() {
     rectMode(CENTER);
     fill(80);
     stroke(#FAE119);
-    rect(width/2, height/2, width/2, height/2);
+    rect(width/2, height/2, width/2 + 200, height/2);
     fill(#FAE119);
     textAlign(CENTER);
     textSize(44);
     if (win) {
-      text("You win!", width/2, height/2);
+      text("You saved Miami from the", width/2, height/2 - 60);
+      text("terrorist skeletons!", width/2, height/2);
       textSize(24);
       text("Press Start to play again.", width/2, height/2 + 50);
     } else {
