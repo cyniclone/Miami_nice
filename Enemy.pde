@@ -13,13 +13,15 @@ class Enemy extends Box {
   PImage[] sprites;
   final int MAX_HP = 15;
   int hp;
+
   boolean dead;
   boolean dyingAnimationFinished;
   int dyingFrames;
 
   Vec2 pos;
-
   float x, y;
+  final float MOVESPEED = 10.0f;
+  float wanderX = random(-1.5, 1.5);
 
   Enemy (float x, float y, float w, float h) {
     dead = false;
@@ -53,6 +55,10 @@ class Enemy extends Box {
   }
 
   void update() {
+    if (!dead)
+      body.setLinearVelocity (new Vec2 (MOVESPEED*wanderX, body.getLinearVelocity().y));
+    if (frameCount %20 == 0) 
+      wanderX = random(-2, 2);
     if (hp <= 0) {
       dead = true;
       box2d.destroyBody(body);
@@ -66,6 +72,8 @@ class Enemy extends Box {
     translate(pos.x, pos.y);
     imageMode(CENTER);
 
+    if (wanderX <= 0)
+      scale (-1, 1); // Flip image horizontally if skeleton wanders left
     if (dead) {
       img = sprites[15 + dyingFrames/12];
 
